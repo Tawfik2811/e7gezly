@@ -102,27 +102,14 @@ void Edit_Appoiment()
 	else 
 		cout << "\nThis Appoiment Doesn't Found !";
 }
-void menu()
-{
-	
-	for (int i = 0; i < time1.size; i++)
-	{
-		cout << "PLease Enter Appoiment " << "#" << i + 1 << endl;
-		cout << "From : ";
-	cout << time1.Time1[i];
-	cout << endl;
-		cout << "To : ";
-		cout<< time1.Time2[i];
-		cout << endl;
-	}
-}
+
 int main()
 {
 	
 	Add_Available_Time();
  Delete_Appoiments();
 	Edit_Appoiment();
-	menu();
+	
 
 
 
