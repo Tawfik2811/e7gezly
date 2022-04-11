@@ -214,10 +214,5 @@ int main()
 			cout << "7- Edit Basic Info ( username/password)\n";
 			cin >> choise4;
 		}
-		
-		
-		
-
-
 	return 0;
 }
