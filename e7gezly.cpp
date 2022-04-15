@@ -3,6 +3,7 @@
 #include <fstream>
 #include<cmath>
 using namespace std;
+ofstream file;
 bool LogIn()
 {
 
@@ -39,21 +40,26 @@ struct doctor_time {
 };
 doctor_time time1;
 void Add_Available_Time() {
-	
-	cout << "How Many Appointments Do You Want To Enter " <<endl;
+
+
+	cout << "How Many Appointments Do You Want To Enter " << endl;
 	cin >> time1.size;
 	for (int i = 0; i < time1.size; i++)
 	{
-		cout << "PLease Enter Appoiment " << "#" << i + 1<<endl;
+		cout << "PLease Enter Appoiment " << "#" << i + 1 << endl;
 		cout << "From : ";
 		cin >> time1.Time1[i];
 		cout << "To : ";
 		cin >> time1.Time2[i];
+		
+		file.open("e:\\ " "time.txt" , std::ios::app);
+		file << time1.Time1[i] << endl << time1.Time2[i] << endl;
+		file.close();
 	}
 }
 void Delete_Appoiments()
 {
-	int found1=0,found2=0;
+	int found1 = 0, found2 = 0;
 	cout << "PLease Enter Appoiment You Want To Delete" << endl;
 	cout << "From : ";
 	cin >> time1.deleted1;
@@ -61,13 +67,13 @@ void Delete_Appoiments()
 	cin >> time1.deleted2;
 	for (int i = 0; i < time1.size; i++)
 	{
-		if (time1.Time1[i] ==time1.deleted1)
+		if (time1.Time1[i] == time1.deleted1)
 		{
 			for (int j = i; j < (time1.size - 1); j++)
 				time1.Time1[j] = time1.Time1[j + 1];
 			found1++;
 			i--;
-			time1.size --;
+			time1.size--;
 		}
 	}
 	for (int i = 0; i < time1.size; i++)
@@ -81,7 +87,7 @@ void Delete_Appoiments()
 			time1.size--;
 		}
 	}
-	if (found1 == 0&&found2==0)
+	if (found1 == 0 && found2 == 0)
 		cout << "\nThis Appoiment Doesn't Found !";
 	else
 		cout << "\nAppoiment Deleted Successfully!";
@@ -89,31 +95,31 @@ void Delete_Appoiments()
 }
 void Edit_Appoiment()
 {
-	int k=0,m=0,flag1=0,flag2=0;
+	int k = 0, m = 0, flag1 = 0, flag2 = 0;
 	cout << "Please Enter The Appoiment You Want TO Modify" << endl;
 	cout << "From : ";
 	cin >> time1.edit1;
 	cout << "To : ";
 	cin >> time1.edit2;
-	for (int i = 0; i <time1.size; i++)
+	for (int i = 0; i < time1.size; i++)
 	{
 		if (time1.Time1[i] == time1.edit1)
 		{
 			k = i;
-			flag1= 1;
+			flag1 = 1;
 		}
-		
+
 	}
 	for (int i = 0; i < time1.size; i++)
 	{
 		if (time1.Time2[i] == time1.edit2)
 		{
-			m= i;
+			m = i;
 			flag2 = 1;
 		}
 
 	}
-	if (flag1 == 1&&flag2==1)
+	if (flag1 == 1 && flag2 == 1)
 	{
 		cout << "Enter The New Appoiment \n";
 		cout << "From : ";
@@ -123,96 +129,96 @@ void Edit_Appoiment()
 		time1.Time1[k] = time1.new1;
 		time1.Time2[m] = time1.new2;
 	}
-	else 
+	else
 		cout << "\nThis Appoiment Doesn't Found !";
 }
 
 int main()
 {
-	int choise1, flag = 0,choise2=0,choise3=0,choise4=0;
+	int choise1, flag = 0, choise2 = 0, choise3 = 0, choise4 = 0;
 	cout << "\t\tWelcome To E7gezly \n\n";
-		cout << "***************************************************************" << endl;
-	start:
-		cout << "1- Registration \n";
-		cout << "2- Login \n";
-		cout << "3- Logout \n";
-		cout <<"Enter Your Choise : ";
-		cin >> choise1;
-		if (choise1 == 1)
-		{
-			string username;
-			string passaword;
-			cout << "Select Username : ";
-			cin >> username;
-			cout << "Select Password : ";
-			cin >>passaword;
-			ofstream file;
-			file.open("e:\\" +username + ".txt");
-			file << username << endl <<passaword;
-			file.close();
-			goto start;
-		}
-		else if (choise1 == 2)
-		{
-			bool status =LogIn();
-			if (!status)
-			{
-				cout << "\t\tWrong Usename Or Password ! \n";
-				cout << "\t\tPlease Try Agian \n";
-				goto start;
-			}
-			else
-			{
-				cout << "\t\tSuccessfully Loggedin\n\n";
-				flag = 1;
-			
-			}
-		}
-		else if (choise1 == 3)
-		{
-			goto start;
-		}
-		if (flag == 1)
-		{
-			cout << "Press 1 For Docotrs \n";
-			cout << "Press 2 For Patients \n";
-			cin >> choise2;
+	cout << "***************************************************************" << endl;
+start:
+	cout << "1- Registration \n";
+	cout << "2- Login \n";
+	cout << "3- Logout \n";
+	cout << "Enter Your Choise : ";
+	cin >> choise1;
+	if (choise1 == 1)
+	{
+		string username;
+		string passaword;
+		cout << "Select Username : ";
+		cin >> username;
+		cout << "Select Password : ";
+		cin >> passaword;
+		ofstream file;
+		file.open("e:\\" + username + ".txt");
+		file << username << endl << passaword;
+		file.close();
+		goto start;
 	}
-		if (choise2 == 1)
-		{ 
-			do
-			{
-				cout << "1- Add Available Time\n";
-				cout << "2- Remove Available Time\n";
-				cout << "3- Edit Available Time\n";
-				cout << "4- View Patients With Appoiments\n";
-				cout << "5- Edit Info (username,password) \n";
-				cout << "6- To Close The Program \n";
-				cin >> choise3;
-				switch (choise3) {
-				case 1:
-					Add_Available_Time();
-					break;
-				case 2:
-					Delete_Appoiments();
-					break;
-				case 3:
-					Edit_Appoiment();
-					break;
-
-				}
-			} while (choise3 != 6);
-		}
-		else if (choise2 == 2)
+	else if (choise1 == 2)
+	{
+		bool status = LogIn();
+		if (!status)
 		{
-			cout << "1- Find Doctors \n";
-			cout << "2- Display Doctors Available In Certain Appointment Time \n";
-			cout << "3- View Appointments\n";
-			cout << "4- Edit Appointments\n";
-			cout << "5- Delete Appointments\n";
-			cout << "6- Clear Appointments history\n";
-			cout << "7- Edit Basic Info ( username/password)\n";
-			cin >> choise4;
+			cout << "\t\tWrong Usename Or Password ! \n";
+			cout << "\t\tPlease Try Agian \n";
+			goto start;
 		}
+		else
+		{
+			cout << "\t\tSuccessfully Loggedin\n\n";
+			flag = 1;
+
+		}
+	}
+	else if (choise1 == 3)
+	{
+		goto start;
+	}
+	if (flag == 1)
+	{
+		cout << "Press 1 For Docotrs \n";
+		cout << "Press 2 For Patients \n";
+		cin >> choise2;
+	}
+	if (choise2 == 1)
+	{
+		do
+		{
+			cout << "1- Add Available Time\n";
+			cout << "2- Remove Available Time\n";
+			cout << "3- Edit Available Time\n";
+			cout << "4- View Patients With Appoiments\n";
+			cout << "5- Edit Info (username,password) \n";
+			cout << "6- To Close The Program \n";
+			cin >> choise3;
+			switch (choise3) {
+			case 1:
+				Add_Available_Time();
+				break;
+			case 2:
+				Delete_Appoiments();
+				break;
+			case 3:
+				Edit_Appoiment();
+				break;
+
+			}
+		} while (choise3 != 6);
+	}
+	else if (choise2 == 2)
+	{
+		cout << "1- Find Doctors \n";
+		cout << "2- Display Doctors Available In Certain Appointment Time \n";
+		cout << "3- View Appointments\n";
+		cout << "4- Edit Appointments\n";
+		cout << "5- Delete Appointments\n";
+		cout << "6- Clear Appointments history\n";
+		cout << "7- Edit Basic Info ( username/password)\n";
+		cin >> choise4;
+	}
 	return 0;
 }
