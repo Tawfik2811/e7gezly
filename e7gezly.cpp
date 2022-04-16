@@ -241,6 +241,8 @@ start:
 			cout << "5- Delete Appointments\n";
 			cout << "6- Clear Appointments history\n";
 			cout << "7- Edit Basic Info ( username/password)\n";
+			cout << "8- Logout \n";
+			cout << "9- To Close The Program \n";
 			cin >> choise4;
 			switch (choise4)
 			{
@@ -255,8 +257,12 @@ start:
 					cout << "This Doctor Is Available\n";
 				}
 				break;
+			case 8:
+				goto start;
+				break;
 			}
-		} while (choise4 != 8);
+
+		} while (choise4 != 9);
 	}
 	return 0;
 }
