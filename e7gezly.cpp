@@ -8,7 +8,7 @@ string doctorpassword[100];
 int counter = 0;
 void Registrationasdoctor()
 {
-	
+
 	cout << "Select Username : ";
 	cin >> doctorusername[counter];
 	cout << "Select Password : ";
@@ -52,7 +52,7 @@ struct doctor_time {
 	int edit2;
 	int new1;
 	int new2;
-	
+
 };
 doctor_time time1;
 void Add_Available_Time() {
@@ -143,6 +143,25 @@ void Edit_Appoiment()
 	else
 		cout << "\nThis Appoiment Doesn't Found !";
 }
+bool Find_Doctor()
+{
+	string doctorname; int search = 0;
+	cout << "Please Enter Doctor Name \n";
+	cin >> doctorname;
+	for (int i = 0; i < counter; i++)
+	{
+		if (doctorusername[i] == doctorname)
+		{
+			search = 1;
+		}
+	}
+	if (search == 1)
+	{
+		return true;
+	}
+	else
+		return false;
+}
 int main()
 {
 	int choise1, flag = 0, choise2 = 0, choise3 = 0, choise4 = 0;
@@ -151,7 +170,7 @@ int main()
 start:
 	cout << "1- Registration \n";
 	cout << "2- Login \n";
-	cout << "3- Logout \n";
+
 	cout << "Enter Your Choise : ";
 	cin >> choise1;
 	if (choise1 == 1)
@@ -175,10 +194,7 @@ start:
 
 		}
 	}
-	else if (choise1 == 3)
-	{
-		goto start;
-	}
+
 	if (flag == 1)
 	{
 		cout << "Press 1 For Docotrs \n";
@@ -194,7 +210,8 @@ start:
 			cout << "3- Edit Available Time\n";
 			cout << "4- View Patients With Appoiments\n";
 			cout << "5- Edit Info (username,password) \n";
-			cout << "6- To Close The Program \n";
+			cout << "6- Logout \n";
+			cout << "7- To Close The Program \n";
 			cin >> choise3;
 			switch (choise3) {
 			case 1:
@@ -206,20 +223,41 @@ start:
 			case 3:
 				Edit_Appoiment();
 				break;
-
+			case 6:
+				goto start;
+				break;
 			}
-		} while (choise3 != 6);
+
+		} while (choise3 != 7);
 	}
 	else if (choise2 == 2)
 	{
-		cout << "1- Find Doctors \n";
-		cout << "2- Display Doctors Available In Certain Appointment Time \n";
-		cout << "3- View Appointments\n";
-		cout << "4- Edit Appointments\n";
-		cout << "5- Delete Appointments\n";
-		cout << "6- Clear Appointments history\n";
-		cout << "7- Edit Basic Info ( username/password)\n";
-		cin >> choise4;
+		do
+		{
+			cout << "1- Find Doctors \n";
+			cout << "2- Display Doctors Available In Certain Appointment Time \n";
+			cout << "3- View Appointments\n";
+			cout << "4- Edit Appointments\n";
+			cout << "5- Delete Appointments\n";
+			cout << "6- Clear Appointments history\n";
+			cout << "7- Edit Basic Info ( username/password)\n";
+			cin >> choise4;
+			switch (choise4)
+			{
+			case 1:
+				bool find = Find_Doctor();
+				if (!find)
+				{
+					cout << "Sorry, This Doctor Is Not Available\n";
+				}
+				else
+				{
+					cout << "This Doctor Is Available\n";
+				}
+				break;
+			}
+		} while (choise4 != 8);
 	}
 	return 0;
 }
+
