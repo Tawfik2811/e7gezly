@@ -42,6 +42,39 @@ bool LogIn()
 	else
 		return false;
 }
+void Edit_Info()
+{
+	string us;
+	string pas;
+	int p = 0;
+	int flag1 = 0;
+	start1:
+	cout << "Enter Current Username : ";
+	cin >> us;
+	cout << "Enter Current Password : ";
+	cin >> pas;
+	for (int i = 0; i < counter; i++)
+	{
+		if (doctorusername[i] == us && doctorpassword[i] == pas)
+		{
+			flag1 = 1;
+			p = i;
+		}
+	}
+	if (flag1 == 1)
+	{
+		cout << "Select Username : ";
+		cin >> doctorusername[p];
+		cout << "Select Password : ";
+		cin >> doctorpassword[p];
+	}
+	else
+	{
+		cout << "\t\tWrong Usename Or Password ! \n";
+		cout << "\t\tPlease Try Agian \n";
+		goto start1;
+	}
+}
 struct doctor_time {
 	int size;
 	int Time1[100];
@@ -166,11 +199,11 @@ int main()
 {
 	int choise1, flag = 0, choise2 = 0, choise3 = 0, choise4 = 0;
 	cout << "\t\tWelcome To E7gezly \n\n";
-	cout << "*********************" << endl;
+	cout << "********************************************************************************" << endl;
 start:
+	cout << endl;
 	cout << "1- Registration \n";
 	cout << "2- Login \n";
-
 	cout << "Enter Your Choise : ";
 	cin >> choise1;
 	if (choise1 == 1)
@@ -223,6 +256,9 @@ start:
 			case 3:
 				Edit_Appoiment();
 				break;
+			case 5:
+				Edit_Info();
+				break;
 			case 6:
 				goto start;
 				break;
@@ -246,7 +282,8 @@ start:
 			cin >> choise4;
 			switch (choise4)
 			{
-			case 1:
+			case 1: 
+			{
 				bool find = Find_Doctor();
 				if (!find)
 				{
@@ -256,6 +293,10 @@ start:
 				{
 					cout << "This Doctor Is Available\n";
 				}
+				break;
+			}
+			case 7:
+				Edit_Info();
 				break;
 			case 8:
 				goto start;
