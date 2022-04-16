@@ -3,32 +3,44 @@
 #include <fstream>
 #include<cmath>
 using namespace std;
+string doctorusername[100];
+string doctorpassword[100];
+int counter = 0;
+void Registrationasdoctor()
+{
+	
+	cout << "Select Username : ";
+	cin >> doctorusername[counter];
+	cout << "Select Password : ";
+	cin >> doctorpassword[counter];
+	ofstream file;
+	file.open("registration doctor.txt", std::ios::app);
+	file << doctorusername[counter] << endl << doctorpassword[counter] << endl;
+	file.close();
+	counter++;
+}
 bool LogIn()
 {
-
-	string username;
-	string passaword;
 	string us;
 	string pas;
+	int flag1 = 0;
 	cout << "Enter Username : ";
-	cin >> username;
+	cin >> us;
 	cout << "Enter Password : ";
-	cin >> passaword;
-	ifstream read( "registration.txt",std::ios::app);
-	for (int i = 0; read.eof(); i++) {
-		getline(read, us);
-		for (int j = 0; read.eof(); j++) {
-			getline(read, pas);
-			if (us == username && pas == passaword)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+	cin >> pas;
+	for (int i = 0; i < counter; i++)
+	{
+		if (doctorusername[i] == us && doctorpassword[i] == pas)
+		{
+			flag1 = 1;
 		}
 	}
+	if (flag1 == 1)
+	{
+		return true;
+	}
+	else
+		return false;
 }
 struct doctor_time {
 	int size;
@@ -40,6 +52,7 @@ struct doctor_time {
 	int edit2;
 	int new1;
 	int new2;
+	
 };
 doctor_time time1;
 void Add_Available_Time() {
@@ -130,7 +143,6 @@ void Edit_Appoiment()
 	else
 		cout << "\nThis Appoiment Doesn't Found !";
 }
-
 int main()
 {
 	int choise1, flag = 0, choise2 = 0, choise3 = 0, choise4 = 0;
@@ -144,16 +156,7 @@ start:
 	cin >> choise1;
 	if (choise1 == 1)
 	{
-		string username;
-		string passaword;
-		cout << "Select Username : ";
-		cin >> username;
-		cout << "Select Password : ";
-		cin >> passaword;
-		ofstream file;
-		file.open( "registration.txt", std::ios::app);
-		file << username << endl << passaword<<endl;
-		file.close();
+		Registrationasdoctor();
 		goto start;
 	}
 	else if (choise1 == 2)
