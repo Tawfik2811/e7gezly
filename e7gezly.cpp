@@ -3,7 +3,6 @@
 #include <fstream>
 #include<cmath>
 using namespace std;
-ofstream file;
 bool LogIn()
 {
 
@@ -15,16 +14,20 @@ bool LogIn()
 	cin >> username;
 	cout << "Enter Password : ";
 	cin >> passaword;
-	ifstream read("e:\\" + username + ".txt");
-	getline(read, us);
-	getline(read, pas);
-	if (us == username && pas == passaword)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
+	ifstream read( "registration.txt",std::ios::app);
+	for (int i = 0; read.eof(); i++) {
+		getline(read, us);
+		for (int j = 0; read.eof(); j++) {
+			getline(read, pas);
+			if (us == username && pas == passaword)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
 }
 struct doctor_time {
@@ -41,7 +44,6 @@ struct doctor_time {
 doctor_time time1;
 void Add_Available_Time() {
 
-
 	cout << "How Many Appointments Do You Want To Enter " << endl;
 	cin >> time1.size;
 	for (int i = 0; i < time1.size; i++)
@@ -51,10 +53,6 @@ void Add_Available_Time() {
 		cin >> time1.Time1[i];
 		cout << "To : ";
 		cin >> time1.Time2[i];
-		
-		file.open("e:\\ " "time.txt" , std::ios::app);
-		file << time1.Time1[i] << endl << time1.Time2[i] << endl;
-		file.close();
 	}
 }
 void Delete_Appoiments()
@@ -137,7 +135,7 @@ int main()
 {
 	int choise1, flag = 0, choise2 = 0, choise3 = 0, choise4 = 0;
 	cout << "\t\tWelcome To E7gezly \n\n";
-	cout << "***************************************************************" << endl;
+	cout << "*********************" << endl;
 start:
 	cout << "1- Registration \n";
 	cout << "2- Login \n";
@@ -153,8 +151,8 @@ start:
 		cout << "Select Password : ";
 		cin >> passaword;
 		ofstream file;
-		file.open("e:\\" + username + ".txt");
-		file << username << endl << passaword;
+		file.open( "registration.txt", std::ios::app);
+		file << username << endl << passaword<<endl;
 		file.close();
 		goto start;
 	}
