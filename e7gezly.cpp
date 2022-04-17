@@ -37,49 +37,55 @@ void RegistrationasPatient()
 }
 bool LogInDoctor()
 {
+	string username;
+	string passaword;
 	string us;
 	string pas;
-	int flag1 = 0;
 	cout << "Enter Username : ";
-	cin >> us;
+	cin >> username;
 	cout << "Enter Password : ";
-	cin >> pas;
-	for (int i = 0; i < counter; i++)
-	{
-		if (doctorusername[i] == us && doctorpassword[i] == pas)
-		{
-			flag1 = 1;
+	cin >> passaword;
+	ifstream read("registration doctor.txt", std::ios::app);
+	for (int i = 0; read.eof(); i++) {
+		getline(read, us);
+		for (int j = 0; read.eof(); j++) {
+			getline(read, pas);
+			if (us == username && pas == passaword)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
-	if (flag1 == 1)
-	{
-		return true;
-	}
-	else
-		return false;
 }
 bool LogInPatient()
 {
+	string username;
+	string passaword;
 	string us;
 	string pas;
-	int flag1 = 0;
 	cout << "Enter Username : ";
-	cin >> us;
+	cin >> username;
 	cout << "Enter Password : ";
-	cin >> pas;
-	for (int i = 0; i < counter2; i++)
-	{
-		if (patientusername[i] == us && patientpassword[i] == pas)
-		{
-			flag1 = 1;
+	cin >> passaword;
+	ifstream read("registration patient", std::ios::app);
+	for (int i = 0; read.eof(); i++) {
+		getline(read, us);
+		for (int j = 0; read.eof(); j++) {
+			getline(read, pas);
+			if (us == username && pas == passaword)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
-	if (flag1 == 1)
-	{
-		return true;
-	}
-	else
-		return false;
 }
 void Edit_Info_Doctor()
 {
@@ -171,6 +177,10 @@ void Add_Available_Time() {
 		cin >> time1.Time1[i];
 		cout << "To : ";
 		cin >> time1.Time2[i];
+		ofstream time;
+		time.open("time.txt", std::ios::app);
+		time << time1.Time1[i] << endl << time1.Time2[i] << endl;
+		time.close();
 	}
 }
 void Delete_Appoiments()
@@ -269,8 +279,8 @@ bool Find_Doctor()
 }
 int main()
 {
-	int choise1 = 0, choise2 = 0,choise3=0,choise4=0,flag1=0,flag2=0;
-	start:
+	int choise1 = 0, choise2 = 0, choise3 = 0, choise4 = 0, flag1 = 0, flag2 = 0;
+start:
 	cout << "\t\t\tWelcome To E7gezly \n\n";
 	cout << "********************************************************************************" << endl;
 	cout << "Press 1 For Docotrs \n";
@@ -279,7 +289,7 @@ int main()
 	cin >> choise1;
 	if (choise1 == 1)
 	{
-		start2:
+	start2:
 		cout << endl;
 		cout << "1- Registration \n";
 		cout << "2- Login \n";
