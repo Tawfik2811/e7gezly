@@ -5,8 +5,11 @@
 using namespace std;
 string doctorusername[100];
 string doctorpassword[100];
+string patientusername[100];
+string patientpassword[100];
+int counter2 = 0;
 int counter = 0;
-void Registrationasdoctor()
+void RegistrationasDoctor()
 {
 
 	cout << "Select Username : ";
@@ -19,7 +22,20 @@ void Registrationasdoctor()
 	file.close();
 	counter++;
 }
-bool LogIn()
+void RegistrationasPatient()
+{
+
+	cout << "Select Username : ";
+	cin >> patientusername[counter2];
+	cout << "Select Password : ";
+	cin >> patientpassword[counter2];
+	ofstream file;
+	file.open("registration patient.txt", std::ios::app);
+	file << patientusername[counter2] << endl << patientpassword[counter2] << endl;
+	file.close();
+	counter2++;
+}
+bool LogInDoctor()
 {
 	string us;
 	string pas;
@@ -42,13 +58,36 @@ bool LogIn()
 	else
 		return false;
 }
-void Edit_Info()
+bool LogInPatient()
+{
+	string us;
+	string pas;
+	int flag1 = 0;
+	cout << "Enter Username : ";
+	cin >> us;
+	cout << "Enter Password : ";
+	cin >> pas;
+	for (int i = 0; i < counter2; i++)
+	{
+		if (patientusername[i] == us && patientpassword[i] == pas)
+		{
+			flag1 = 1;
+		}
+	}
+	if (flag1 == 1)
+	{
+		return true;
+	}
+	else
+		return false;
+}
+void Edit_Info_Doctor()
 {
 	string us;
 	string pas;
 	int p = 0;
 	int flag1 = 0;
-	start1:
+start1:
 	cout << "Enter Current Username : ";
 	cin >> us;
 	cout << "Enter Current Password : ";
@@ -67,6 +106,39 @@ void Edit_Info()
 		cin >> doctorusername[p];
 		cout << "Select Password : ";
 		cin >> doctorpassword[p];
+	}
+	else
+	{
+		cout << "\t\tWrong Usename Or Password ! \n";
+		cout << "\t\tPlease Try Agian \n";
+		goto start1;
+	}
+}
+void Edit_Info_Patient()
+{
+	string us;
+	string pas;
+	int p = 0;
+	int flag1 = 0;
+start1:
+	cout << "Enter Current Username : ";
+	cin >> us;
+	cout << "Enter Current Password : ";
+	cin >> pas;
+	for (int i = 0; i < counter2; i++)
+	{
+		if (patientusername[i] == us && patientpassword[i] == pas)
+		{
+			flag1 = 1;
+			p = i;
+		}
+	}
+	if (flag1 == 1)
+	{
+		cout << "Select Username : ";
+		cin >> patientusername[p];
+		cout << "Select Password : ";
+		cin >> patientpassword[p];
 	}
 	else
 	{
@@ -197,114 +269,148 @@ bool Find_Doctor()
 }
 int main()
 {
-	int choise1, flag = 0, choise2 = 0, choise3 = 0, choise4 = 0;
-	cout << "\t\tWelcome To E7gezly \n\n";
+	int choise1 = 0, choise2 = 0,choise3=0,choise4=0,flag1=0,flag2=0;
+	start:
+	cout << "\t\t\tWelcome To E7gezly \n\n";
 	cout << "********************************************************************************" << endl;
-start:
-	cout << endl;
-	cout << "1- Registration \n";
-	cout << "2- Login \n";
+	cout << "Press 1 For Docotrs \n";
+	cout << "Press 2 For Patients \n";
 	cout << "Enter Your Choise : ";
 	cin >> choise1;
 	if (choise1 == 1)
 	{
-		Registrationasdoctor();
-		goto start;
+		start2:
+		cout << endl;
+		cout << "1- Registration \n";
+		cout << "2- Login \n";
+		cout << "Enter Your Choise : ";
+		cin >> choise2;
+		if (choise2 == 1)
+		{
+			RegistrationasDoctor();
+			goto start2;
+		}
+		else if (choise2 == 2)
+		{
+			bool status = LogInDoctor();
+			if (!status)
+			{
+				cout << "\t\tWrong Usename Or Password ! \n";
+				cout << "\t\tPlease Try Agian \n";
+				goto start2;
+			}
+			else
+			{
+				cout << endl;
+				cout << "\t\tSuccessfully Loggedin\n\n";
+				flag1 = 1;
+
+			}
+		}
+		if (flag1 == 1)
+		{
+			do
+			{
+				cout << "1- Add Available Time\n";
+				cout << "2- Remove Available Time\n";
+				cout << "3- Edit Available Time\n";
+				cout << "4- View Patients With Appoiments\n";
+				cout << "5- Edit Info (username,password) \n";
+				cout << "6- Logout \n";
+				cout << "7- To Close The Program \n";
+				cin >> choise3;
+				switch (choise3) {
+				case 1:
+					Add_Available_Time();
+					break;
+				case 2:
+					Delete_Appoiments();
+					break;
+				case 3:
+					Edit_Appoiment();
+					break;
+				case 5:
+					Edit_Info_Doctor();
+					break;
+				case 6:
+					goto start;
+					break;
+				}
+
+			} while (choise3 != 7);
+		}
 	}
 	else if (choise1 == 2)
 	{
-		bool status = LogIn();
-		if (!status)
-		{
-			cout << "\t\tWrong Usename Or Password ! \n";
-			cout << "\t\tPlease Try Agian \n";
-			goto start;
-		}
-		else
-		{
-			cout << "\t\tSuccessfully Loggedin\n\n";
-			flag = 1;
-
-		}
-	}
-
-	if (flag == 1)
-	{
-		cout << "Press 1 For Docotrs \n";
-		cout << "Press 2 For Patients \n";
+	start3:
+		cout << endl;
+		cout << "1- Registration \n";
+		cout << "2- Login \n";
+		cout << "Enter Your Choise : ";
 		cin >> choise2;
-	}
-	if (choise2 == 1)
-	{
-		do
+		if (choise2 == 1)
 		{
-			cout << "1- Add Available Time\n";
-			cout << "2- Remove Available Time\n";
-			cout << "3- Edit Available Time\n";
-			cout << "4- View Patients With Appoiments\n";
-			cout << "5- Edit Info (username,password) \n";
-			cout << "6- Logout \n";
-			cout << "7- To Close The Program \n";
-			cin >> choise3;
-			switch (choise3) {
-			case 1:
-				Add_Available_Time();
-				break;
-			case 2:
-				Delete_Appoiments();
-				break;
-			case 3:
-				Edit_Appoiment();
-				break;
-			case 5:
-				Edit_Info();
-				break;
-			case 6:
-				goto start;
-				break;
-			}
-
-		} while (choise3 != 7);
-	}
-	else if (choise2 == 2)
-	{
-		do
+			RegistrationasPatient();
+			goto start3;
+		}
+		else if (choise2 == 2)
 		{
-			cout << "1- Find Doctors \n";
-			cout << "2- Display Doctors Available In Certain Appointment Time \n";
-			cout << "3- View Appointments\n";
-			cout << "4- Edit Appointments\n";
-			cout << "5- Delete Appointments\n";
-			cout << "6- Clear Appointments history\n";
-			cout << "7- Edit Basic Info ( username/password)\n";
-			cout << "8- Logout \n";
-			cout << "9- To Close The Program \n";
-			cin >> choise4;
-			switch (choise4)
+			bool status = LogInPatient();
+			if (!status)
 			{
-			case 1: 
+				cout << "\t\tWrong Usename Or Password ! \n";
+				cout << "\t\tPlease Try Agian \n";
+				goto start3;
+			}
+			else
 			{
-				bool find = Find_Doctor();
-				if (!find)
-				{
-					cout << "Sorry, This Doctor Is Not Available\n";
-				}
-				else
-				{
-					cout << "This Doctor Is Available\n";
-				}
-				break;
+				cout << "\t\tSuccessfully Loggedin\n\n";
+				flag2 = 1;
 			}
-			case 7:
-				Edit_Info();
-				break;
-			case 8:
-				goto start;
-				break;
-			}
+		}
+		if (flag2 == 1)
+		{
+			do
+			{
+				cout << "1- Find Doctors \n";
+				cout << "2- Display Doctors Available In Certain Appointment Time \n";
+				cout << "3- View Appointments\n";
+				cout << "4- Edit Appointments\n";
+				cout << "5- Delete Appointments\n";
+				cout << "6- Clear Appointments history\n";
+				cout << "7- Edit Basic Info ( username/password)\n";
+				cout << "8- Logout \n";
+				cout << "9- To Close The Program \n";
+				cin >> choise4;
+				switch (choise4)
+				{
+				case 1:
+				{
+					bool find = Find_Doctor();
+					if (!find)
+					{
+						cout << "Sorry, This Doctor Is Not Available\n";
+					}
+					else
+					{
+						cout << "This Doctor Is Available\n";
+					}
+					break;
+				}
+				case 7:
+					Edit_Info_Patient();
+					break;
+				case 8:
+					goto start;
+				}
 
-		} while (choise4 != 9);
+			} while (choise4 != 9);
+		}
+	}
+	else
+	{
+		cout << "Please Enter Right Number \n";
+		goto start;
 	}
 	return 0;
 }
-
