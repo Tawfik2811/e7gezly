@@ -9,6 +9,11 @@ string patientusername[100];
 string patientpassword[100];
 int counter2 = 0;
 int counter = 0;
+int display_time1[100];
+int display_time2[100];
+string display_day[100];
+string display_name[100];
+
 void RegistrationasDoctor()
 {
 
@@ -45,21 +50,19 @@ bool LogInDoctor()
 	cin >> username;
 	cout << "Enter Password : ";
 	cin >> passaword;
-	ifstream read("registration doctor.txt", std::ios::app);
-	for (int i = 0; read.eof(); i++) {
-		getline(read, us);
-		for (int j = 0; read.eof(); j++) {
-			getline(read, pas);
-			if (us == username && pas == passaword)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+	for (int i = 0; i < counter; i++) {
+		if (doctorusername[i] == username && doctorpassword[i] == passaword)
+		{
+			ofstream time;
+			time.open("time.txt", std::ios::app);
+			time <<"Doctor : " << username << endl;
+			time.close();
+			return true;
 		}
+
 	}
+	return false;
+
 }
 bool LogInPatient()
 {
@@ -71,21 +74,14 @@ bool LogInPatient()
 	cin >> username;
 	cout << "Enter Password : ";
 	cin >> passaword;
-	ifstream read("registration patient", std::ios::app);
-	for (int i = 0; read.eof(); i++) {
-		getline(read, us);
-		for (int j = 0; read.eof(); j++) {
-			getline(read, pas);
-			if (us == username && pas == passaword)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+	for (int i = 0; i < counter2; i++) {
+		if (patientusername[i] == username && patientpassword[i] == passaword) {
+			return true;
 		}
+
 	}
+	return false;
+
 }
 void Edit_Info_Doctor()
 {
@@ -157,6 +153,7 @@ struct doctor_time {
 	int size;
 	int Time1[100];
 	int Time2[100];
+	string day[100];
 	int deleted1;
 	int deleted2;
 	int edit1;
@@ -170,16 +167,17 @@ void Add_Available_Time() {
 
 	cout << "How Many Appointments Do You Want To Enter " << endl;
 	cin >> time1.size;
-	for (int i = 0; i < time1.size; i++)
-	{
+	for (int i = 0; i < time1.size; i++) {
 		cout << "PLease Enter Appoiment " << "#" << i + 1 << endl;
+		cout << "Enter the day: ";
+		cin >> time1.day[i];
 		cout << "From : ";
 		cin >> time1.Time1[i];
 		cout << "To : ";
 		cin >> time1.Time2[i];
 		ofstream time;
 		time.open("time.txt", std::ios::app);
-		time << time1.Time1[i] << endl << time1.Time2[i] << endl;
+		time << "Day : " << time1.day[i] << endl << "From : " << time1.Time1[i] << endl <<"To : " << time1.Time2[i] << endl;
 		time.close();
 	}
 }
@@ -407,6 +405,7 @@ start:
 					}
 					break;
 				}
+				
 				case 7:
 					Edit_Info_Patient();
 					break;
