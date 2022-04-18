@@ -9,6 +9,7 @@ string patientusername[100];
 string patientpassword[100];
 int counter2 = 0;
 int counter = 0;
+int counter_time = 0;
 void RegistrationasDoctor()
 {
 
@@ -57,7 +58,6 @@ bool LogInDoctor()
 
 	}
 	return false;
-
 }
 bool LogInPatient()
 {
@@ -165,14 +165,15 @@ void Add_Available_Time() {
 	for (int i = 0; i < time1.size; i++) {
 		cout << "PLease Enter Appoiment " << "#" << i + 1 << endl;
 		cout << "Enter the day: ";
-		cin >> time1.day[i];
+		cin >> time1.day[counter_time];
 		cout << "From : ";
-		cin >> time1.Time1[i];
+		cin >> time1.Time1[counter_time];
 		cout << "To : ";
-		cin >> time1.Time2[i];
+		cin >> time1.Time2[counter_time];
 		ofstream time;
 		time.open("time.txt", std::ios::app);
-		time << "Day : " << time1.day[i] << endl << "From : " << time1.Time1[i] << endl <<"To : " << time1.Time2[i] << endl;
+		time << "Day : " << time1.day[counter_time] << endl << "From : " << time1.Time1[counter_time] << endl <<"To : " << time1.Time2[counter_time] << endl;
+		counter_time++;
 		time.close();
 	}
 }
@@ -350,6 +351,7 @@ start:
 				case 6:
 					goto start;
 					break;
+			
 				}
 
 			} while (choise3 != 7);
