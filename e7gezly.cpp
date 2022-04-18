@@ -275,6 +275,18 @@ bool Find_Doctor()
 	else
 		return false;
 }
+void Display_Doctors_Available_In_Certain_Appointment_Time()
+{
+	fstream display;
+	display.open("time.txt", ios::in); 
+	if (display.is_open()) {   
+		string tp;
+		while (getline(display, tp)) {  
+			cout << tp << "\n";  
+		}
+		display.close();  
+	}
+}
 int main()
 {
 	int choise1 = 0, choise2 = 0, choise3 = 0, choise4 = 0, flag1 = 0, flag2 = 0;
@@ -405,7 +417,9 @@ start:
 					}
 					break;
 				}
-				
+				case 2: 
+					Display_Doctors_Available_In_Certain_Appointment_Time();
+					break;
 				case 7:
 					Edit_Info_Patient();
 					break;
