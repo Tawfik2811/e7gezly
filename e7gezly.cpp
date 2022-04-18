@@ -153,8 +153,10 @@ struct doctor_time {
 	int deleted2;
 	int edit1;
 	int edit2;
+	string edit3;
 	int new1;
 	int new2;
+string new3;
 
 };
 doctor_time time1;
@@ -215,13 +217,15 @@ void Delete_Appoiments()
 }
 void Edit_Appoiment()
 {
-	int k = 0, m = 0, flag1 = 0, flag2 = 0;
+	int k = 0, m = 0, flag1 = 0, flag2 = 0, flag3 = 0, l = 0;
 	cout << "Please Enter The Appoiment You Want TO Modify" << endl;
+	cout << "Day : ";
+	cin >> time1.edit3;
 	cout << "From : ";
 	cin >> time1.edit1;
 	cout << "To : ";
 	cin >> time1.edit2;
-	for (int i = 0; i < time1.size; i++)
+	for (int i = 0; i < counter_time; i++)
 	{
 		if (time1.Time1[i] == time1.edit1)
 		{
@@ -230,7 +234,7 @@ void Edit_Appoiment()
 		}
 
 	}
-	for (int i = 0; i < time1.size; i++)
+	for (int i = 0; i < counter_time; i++)
 	{
 		if (time1.Time2[i] == time1.edit2)
 		{
@@ -239,18 +243,31 @@ void Edit_Appoiment()
 		}
 
 	}
-	if (flag1 == 1 && flag2 == 1)
+	for (int i = 0; i < counter_time; i++)
+	{
+		if (time1.day[i] == time1.edit3)
+		{
+			l= i;
+			flag3 = 1;
+		}
+
+	}
+	if (flag1 == 1 && flag2 == 1 && flag3 == 1)
 	{
 		cout << "Enter The New Appoiment \n";
+		cout << "Day :";
+		cin >> time1.new3;
 		cout << "From : ";
 		cin >> time1.new1;
 		cout << "To : ";
 		cin >> time1.new2;
 		time1.Time1[k] = time1.new1;
 		time1.Time2[m] = time1.new2;
+		time1.day[l] = time1.new3;
 	}
 	else
 		cout << "\nThis Appoiment Doesn't Found !";
+		cout<<endl;
 }
 bool Find_Doctor()
 {
@@ -327,6 +344,7 @@ start:
 		{
 			do
 			{
+				cout << endl;
 				cout << "1- Add Available Time\n";
 				cout << "2- Remove Available Time\n";
 				cout << "3- Edit Available Time\n";
