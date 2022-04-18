@@ -9,11 +9,6 @@ string patientusername[100];
 string patientpassword[100];
 int counter2 = 0;
 int counter = 0;
-int display_time1[100];
-int display_time2[100];
-string display_day[100];
-string display_name[100];
-
 void RegistrationasDoctor()
 {
 
