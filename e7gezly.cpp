@@ -5,11 +5,12 @@
 using namespace std;
 string doctorusername[100];
 string doctorpassword[100];
+int counter = 0;
+int counter_time = 0;
+int counter_size = 0;
 string patientusername[100];
 string patientpassword[100];
 int counter2 = 0;
-int counter = 0;
-int counter_time = 0;
 void RegistrationasDoctor()
 {
 
@@ -145,7 +146,7 @@ start1:
 	}
 }
 struct doctor_time {
-	int size;
+	int size[100];
 	int Time1[100];
 	int Time2[100];
 	string day[100];
@@ -163,8 +164,9 @@ doctor_time time1;
 void Add_Available_Time() {
 
 	cout << "How Many Appointments Do You Want To Enter " << endl;
-	cin >> time1.size;
-	for (int i = 0; i < time1.size; i++) {
+	cin >> time1.size[counter_size];
+	for (int i = 0; i < time1.size[counter_size]; i++) 
+	{
 		cout << "PLease Enter Appoiment " << "#" << i + 1 << endl;
 		cout << "Enter the day: ";
 		cin >> time1.day[counter_time];
@@ -172,48 +174,9 @@ void Add_Available_Time() {
 		cin >> time1.Time1[counter_time];
 		cout << "To : ";
 		cin >> time1.Time2[counter_time];
-		ofstream time;
-		time.open("time.txt", std::ios::app);
-		time << "Day : " << time1.day[counter_time] << endl << "From : " << time1.Time1[counter_time] << endl <<"To : " << time1.Time2[counter_time] << endl;
 		counter_time++;
-		time.close();
 	}
-}
-void Delete_Appoiments()
-{
-	int found1 = 0, found2 = 0;
-	cout << "PLease Enter Appoiment You Want To Delete" << endl;
-	cout << "From : ";
-	cin >> time1.deleted1;
-	cout << "To : ";
-	cin >> time1.deleted2;
-	for (int i = 0; i < time1.size; i++)
-	{
-		if (time1.Time1[i] == time1.deleted1)
-		{
-			for (int j = i; j < (time1.size - 1); j++)
-				time1.Time1[j] = time1.Time1[j + 1];
-			found1++;
-			i--;
-			time1.size--;
-		}
-	}
-	for (int i = 0; i < time1.size; i++)
-	{
-		if (time1.Time2[i] == time1.deleted2)
-		{
-			for (int j = i; j < (time1.size - 1); j++)
-				time1.Time2[j] = time1.Time2[j + 1];
-			found2++;
-			i--;
-			time1.size--;
-		}
-	}
-	if (found1 == 0 && found2 == 0)
-		cout << "\nThis Appoiment Doesn't Found !";
-	else
-		cout << "\nAppoiment Deleted Successfully!";
-	cout << endl;
+	counter_size++;
 }
 void Edit_Appoiment()
 {
@@ -290,14 +253,21 @@ bool Find_Doctor()
 }
 void Display_Doctors_Available_In_Certain_Appointment_Time()
 {
-	fstream display;
-	display.open("time.txt", ios::in); 
-	if (display.is_open()) {   
-		string tp;
-		while (getline(display, tp)) {  
-			cout << tp << "\n";  
+	int j = 0; int k = 0,m=0;
+	for (int i = 0; i < counter; i++)
+	{
+		
+		cout << "Doctor : " << doctorusername[i] << endl;
+		while (k < time1.size[j])
+		{
+			cout << "Day : " << time1.day[m]<<endl;
+			cout << "From : " << time1.Time1[m] << endl;
+			cout << "To : " << time1.Time2[m] << endl;
+			k++;
+			m++;
 		}
-		display.close();  
+		j++;
+		k = 0;
 	}
 }
 int main()
@@ -357,9 +327,7 @@ start:
 				case 1:
 					Add_Available_Time();
 					break;
-				case 2:
-					Delete_Appoiments();
-					break;
+				
 				case 3:
 					Edit_Appoiment();
 					break;
