@@ -104,7 +104,7 @@ void Add_Available_Time() {
 	}
 	counter_size++;
 }
-void Edit_Appoiment()
+void Edit_Appointment()
 {
 	int k = 0, flag1 = 0, flag2 = 0, l = 0;
 	cout << "Please Enter The Appointment You Want TO Modify" << endl;
@@ -241,7 +241,7 @@ start:
 					break;
 
 				case 3:
-					Edit_Appoiment();
+					Edit_Appointment();
 					break;
 				case 5:
 					Edit_Info(doctorusername, doctorpassword, counter);
