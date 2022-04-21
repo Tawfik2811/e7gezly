@@ -15,9 +15,9 @@ void Registrationas(string user[], string pas[], int& count)
 {
 
 	cout << "Select Username : ";
-	cin >> user[count];
+	std::getline(std::cin >> std::ws, user[count]);
 	cout << "Select Password : ";
-	cin >> pas[count];
+	std::getline(std::cin >> std::ws, pas[count]);
 	count++;
 }
 bool LogIn(string user[], string pas[], int& count)
@@ -26,9 +26,9 @@ bool LogIn(string user[], string pas[], int& count)
 	string username;
 	string password;
 	cout << "Enter Username : ";
-	cin >> username;
+	std::getline(std::cin >> std::ws, username);
 	cout << "Enter Password : ";
-	cin >> password;
+	std::getline(std::cin >> std::ws, password);
 	for (int i = 0; i < count; i++) {
 		if (user[i] == username && pas[i] == password)
 		{
@@ -51,9 +51,9 @@ void Edit_Info(string user[], string pas[], int& count)
 	int flag1 = 0;
 start1:
 	cout << "Enter Current Username : ";
-	cin >> username;
+	std::getline(std::cin >> std::ws, username);
 	cout << "Enter Current Password : ";
-	cin >> password;
+	std::getline(std::cin >> std::ws, password);
 	for (int i = 0; i < counter; i++)
 	{
 		if (user[i] == username && pas[i] == password)
@@ -65,9 +65,9 @@ start1:
 	if (flag1 == 1)
 	{
 		cout << "Select Username : ";
-		cin >> user[p];
+		std::getline(std::cin >> std::ws, user[p]);
 		cout << "Select Password : ";
-		cin >> pas[p];
+		std::getline(std::cin >> std::ws, pas[p]);
 	}
 	else
 	{
@@ -76,14 +76,13 @@ start1:
 		goto start1;
 	}
 }
-
 struct doctor_time {
 	int size[100] = { 0 };
 	string Time1[100];
 	string day[100];
 	string edit1;
 	string edit2;
-string new1;
+	string new1;
 	string new2;
 
 };
@@ -99,12 +98,12 @@ void Add_Available_Time() {
 		cin >> time1.day[counter_time];
 		cout << "Time : ";
 		cin >> time1.Time1[counter_time];
-		
+
 		counter_time++;
 	}
 	counter_size++;
 }
-void Edit_Appointment()
+void Edit_Available_Time()
 {
 	int k = 0, flag1 = 0, flag2 = 0, l = 0;
 	cout << "Please Enter The Appointment You Want TO Modify" << endl;
@@ -130,7 +129,7 @@ void Edit_Appointment()
 		}
 
 	}
-	if (flag1 == 1 && flag2 == 1 )
+	if (flag1 == 1 && flag2 == 1)
 	{
 		cout << "Enter The New Appoiment \n";
 		cout << "Day :";
@@ -172,8 +171,15 @@ void Display_Doctors_Available_In_Certain_Appointment_Time()
 		cout << "Doctor : " << doctorusername[i] << endl;
 		while (k < time1.size[j])
 		{
-			cout << "Day : " << time1.day[m] << endl;
-			cout << "Time : " << time1.Time1[m] << endl;
+			if (time1.day[m] == "0" && time1.Time1[m] == "0")
+			{
+				cout << " ";
+			}
+			else
+			{
+				cout << "Day : " << time1.day[m] << endl;
+				cout << "Time : " << time1.Time1[m] << endl;
+			}
 			k++;
 			m++;
 		}
@@ -181,7 +187,6 @@ void Display_Doctors_Available_In_Certain_Appointment_Time()
 		k = 0;
 	}
 }
-
 int main()
 {
 	int choise1 = 0, choise2 = 0, choise3 = 0, choise4 = 0, flag1 = 0, flag2 = 0;
@@ -234,6 +239,7 @@ start:
 				cout << "5- Edit Info (username,password) \n";
 				cout << "6- Logout \n";
 				cout << "7- To Close The Program \n";
+				cout << "Enter Your Choise : ";
 				cin >> choise3;
 				switch (choise3) {
 				case 1:
@@ -241,7 +247,7 @@ start:
 					break;
 
 				case 3:
-					Edit_Appointment();
+					Edit_Available_Time();
 					break;
 				case 5:
 					Edit_Info(doctorusername, doctorpassword, counter);
@@ -295,6 +301,7 @@ start:
 				cout << "7- Edit Basic Info ( username/password)\n";
 				cout << "8- Logout \n";
 				cout << "9- To Close The Program \n";
+				cout << "Enter Your Choise : ";
 				cin >> choise4;
 				switch (choise4)
 				{
