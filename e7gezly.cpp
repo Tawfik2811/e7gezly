@@ -78,18 +78,13 @@ start1:
 }
 
 struct doctor_time {
-	int size[100];
-	int Time1[100];
-	int Time2[100];
+	int size[100] = { 0 };
+	string Time1[100];
 	string day[100];
-	int deleted1;
-	int deleted2;
-	int edit1;
-	int edit2;
-	string edit3;
-	int new1;
-	int new2;
-	string new3;
+	string edit1;
+	string edit2;
+string new1;
+	string new2;
 
 };
 doctor_time time1;
@@ -102,27 +97,24 @@ void Add_Available_Time() {
 		cout << "PLease Enter Appoiment " << "#" << i + 1 << endl;
 		cout << "Enter the day: ";
 		cin >> time1.day[counter_time];
-		cout << "From : ";
+		cout << "Time : ";
 		cin >> time1.Time1[counter_time];
-		cout << "To : ";
-		cin >> time1.Time2[counter_time];
+		
 		counter_time++;
 	}
 	counter_size++;
 }
 void Edit_Appoiment()
 {
-	int k = 0, m = 0, flag1 = 0, flag2 = 0, flag3 = 0, l = 0;
+	int k = 0, flag1 = 0, flag2 = 0, l = 0;
 	cout << "Please Enter The Appoiment You Want TO Modify" << endl;
 	cout << "Day : ";
-	cin >> time1.edit3;
-	cout << "From : ";
 	cin >> time1.edit1;
-	cout << "To : ";
+	cout << "Time : ";
 	cin >> time1.edit2;
 	for (int i = 0; i < counter_time; i++)
 	{
-		if (time1.Time1[i] == time1.edit1)
+		if (time1.Time1[i] == time1.edit2)
 		{
 			k = i;
 			flag1 = 1;
@@ -131,34 +123,22 @@ void Edit_Appoiment()
 	}
 	for (int i = 0; i < counter_time; i++)
 	{
-		if (time1.Time2[i] == time1.edit2)
+		if (time1.day[i] == time1.edit1)
 		{
-			m = i;
+			l = i;
 			flag2 = 1;
 		}
 
 	}
-	for (int i = 0; i < counter_time; i++)
-	{
-		if (time1.day[i] == time1.edit3)
-		{
-			l = i;
-			flag3 = 1;
-		}
-
-	}
-	if (flag1 == 1 && flag2 == 1 && flag3 == 1)
+	if (flag1 == 1 && flag2 == 1 )
 	{
 		cout << "Enter The New Appoiment \n";
 		cout << "Day :";
-		cin >> time1.new3;
-		cout << "From : ";
 		cin >> time1.new1;
-		cout << "To : ";
+		cout << "Time : ";
 		cin >> time1.new2;
 		time1.Time1[k] = time1.new1;
-		time1.Time2[m] = time1.new2;
-		time1.day[l] = time1.new3;
+		time1.day[l] = time1.new2;
 	}
 	else
 		cout << "\nThis Appoiment Doesn't Found !";
@@ -193,8 +173,7 @@ void Display_Doctors_Available_In_Certain_Appointment_Time()
 		while (k < time1.size[j])
 		{
 			cout << "Day : " << time1.day[m] << endl;
-			cout << "From : " << time1.Time1[m] << endl;
-			cout << "To : " << time1.Time2[m] << endl;
+			cout << "Time : " << time1.Time1[m] << endl;
 			k++;
 			m++;
 		}
@@ -223,7 +202,7 @@ start:
 		cin >> choise2;
 		if (choise2 == 1)
 		{
-			Registrationas(doctorusername, doctorpassword,counter);
+			Registrationas(doctorusername, doctorpassword, counter);
 			goto start2;
 		}
 		else if (choise2 == 2)
@@ -290,7 +269,7 @@ start:
 		}
 		else if (choise2 == 2)
 		{
-			bool status = LogIn(patientusername, patientpassword,counter2);
+			bool status = LogIn(patientusername, patientpassword, counter2);
 			if (!status)
 			{
 				cout << "\t\tWrong Usename Or Password ! \n";
