@@ -131,16 +131,17 @@ void Edit_Available_Time()
 	}
 	if (flag1 == 1 && flag2 == 1)
 	{
-		cout << "Enter The New Appoiment \n";
+		cout << "Enter The New Appointment \n";
 		cout << "Day :";
 		cin >> time1.new1;
 		cout << "Time : ";
 		cin >> time1.new2;
 		time1.Time1[k] = time1.new1;
 		time1.day[l] = time1.new2;
+		cout << "The Appointment Has Been Successfully Modified\n";
 	}
 	else
-		cout << "\nThis Appoiment Doesn't Found !";
+		cout << "\nThis Appointment Doesn't Found !";
 	cout << endl;
 }
 bool Find_Doctor()
@@ -222,7 +223,7 @@ start:
 			else
 			{
 				cout << endl;
-				cout << "\t\tSuccessfully Loggedin\n\n";
+				cout << "\t\t\tSuccessfully Loggedin\n\n";
 				flag1 = 1;
 
 			}
