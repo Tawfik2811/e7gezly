@@ -107,7 +107,7 @@ void Add_Available_Time() {
 void Edit_Appoiment()
 {
 	int k = 0, flag1 = 0, flag2 = 0, l = 0;
-	cout << "Please Enter The Appoiment You Want TO Modify" << endl;
+	cout << "Please Enter The Appointment You Want TO Modify" << endl;
 	cout << "Day : ";
 	cin >> time1.edit1;
 	cout << "Time : ";
