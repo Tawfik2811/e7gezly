@@ -11,52 +11,85 @@ int counter_size = 0;
 string patientusername[100];
 string patientpassword[100];
 int counter2 = 0;
-void Registrationas(string user[], string pas[], int& count)
+void RegistrationasDoctor()
 {
 
 	cout << "Select Username : ";
-	std::getline(std::cin >> std::ws, user[count]);
+	getline(std::cin >> std::ws, doctorusername[counter]);
 	cout << "Select Password : ";
-	std::getline(std::cin >> std::ws, pas[count]);
-	count++;
-}
-bool LogIn(string user[], string pas[], int& count)
-{
-	int search = 0;
-	string username;
-	string password;
-	cout << "Enter Username : ";
-	std::getline(std::cin >> std::ws, username);
-	cout << "Enter Password : ";
-	std::getline(std::cin >> std::ws, password);
-	for (int i = 0; i < count; i++) {
-		if (user[i] == username && pas[i] == password)
-		{
-			search = 1;
-		}
+	std::getline(std::cin >> std::ws, doctorpassword[counter]);
+	ofstream file;
+	file.open("registration doctor.txt", std::ios::app);
+	file << doctorusername[counter] << endl << doctorpassword[counter] << endl;
+	file.close();
+	counter++;
 
-	}
-	if (search == 1)
-	{
-		return true;
-	}
-	else
-		return false;
 }
-void Edit_Info(string user[], string pas[], int& count)
+void RegistrationasPatient()
+{
+	cout << "Select Username : ";
+	getline(std::cin >> std::ws, patientusername[counter2]);
+	cout << "Select Password : ";
+	getline(std::cin >> std::ws, patientpassword[counter2]);
+	ofstream file;
+	file.open("registration patient.txt", std::ios::app);
+	file << patientusername[counter2] << endl << patientpassword[counter2] << endl;
+	file.close();
+	counter2++;
+}
+bool LogInDoctor()
 {
 	string username;
-	string password;
+	string passaword;
+	string us;
+	string pas;
+	cout << "Enter Username : ";
+	cin >> username;
+	cout << "Enter Password : ";
+	cin >> passaword;
+	for (int i = 0; i < counter; i++) {
+		if (doctorusername[i] == username && doctorpassword[i] == passaword)
+		{
+			ofstream time;
+			time.open("time.txt", std::ios::app);
+			time << "Doctor : " << username << endl;
+			time.close();
+			return true;
+		}
+	}
+	return false;
+}
+bool LogInPatient()
+{
+	string username;
+	string passaword;
+	string us;
+	string pas;
+	cout << "Enter Username : ";
+	cin >> username;
+	cout << "Enter Password : ";
+	cin >> passaword;
+	for (int i = 0; i < counter2; i++) {
+		if (patientusername[i] == username && patientpassword[i] == passaword) {
+			return true;
+		}
+	}
+	return false;
+}
+void Edit_Info_Doctor()
+{
+	string us;
+	string pas;
 	int p = 0;
 	int flag1 = 0;
 start1:
 	cout << "Enter Current Username : ";
-	std::getline(std::cin >> std::ws, username);
+	cin >> us;
 	cout << "Enter Current Password : ";
-	std::getline(std::cin >> std::ws, password);
+	cin >> pas;
 	for (int i = 0; i < counter; i++)
 	{
-		if (user[i] == username && pas[i] == password)
+		if (doctorusername[i] == us && doctorpassword[i] == pas)
 		{
 			flag1 = 1;
 			p = i;
@@ -65,9 +98,42 @@ start1:
 	if (flag1 == 1)
 	{
 		cout << "Select Username : ";
-		std::getline(std::cin >> std::ws, user[p]);
+		cin >> doctorusername[p];
 		cout << "Select Password : ";
-		std::getline(std::cin >> std::ws, pas[p]);
+		cin >> doctorpassword[p];
+	}
+	else
+	{
+		cout << "\t\tWrong Usename Or Password ! \n";
+		cout << "\t\tPlease Try Agian \n";
+		goto start1;
+	}
+}
+void Edit_Info_Patient()
+{
+	string us;
+	string pas;
+	int p = 0;
+	int flag1 = 0;
+start1:
+	cout << "Enter Current Username : ";
+	cin >> us;
+	cout << "Enter Current Password : ";
+	cin >> pas;
+	for (int i = 0; i < counter2; i++)
+	{
+		if (patientusername[i] == us && patientpassword[i] == pas)
+		{
+			flag1 = 1;
+			p = i;
+		}
+	}
+	if (flag1 == 1)
+	{
+		cout << "Select Username : ";
+		cin >> patientusername[p];
+		cout << "Select Password : ";
+		cin >> patientpassword[p];
 	}
 	else
 	{
@@ -98,94 +164,24 @@ void Add_Available_Time() {
 		cin >> time1.day[counter_time];
 		cout << "Time : ";
 		cin >> time1.Time1[counter_time];
-
+		ofstream time;
+		time.open("time.txt", std::ios::app);
+		time << time1.day[counter_time] << endl  << time1.Time1[counter_time] << endl;
 		counter_time++;
+		time.close();
 	}
 	counter_size++;
 }
-void Edit_Available_Time()
-{
-	int k = 0, flag1 = 0, flag2 = 0, l = 0;
-	cout << "Please Enter The Appointment You Want TO Modify" << endl;
-	cout << "Day : ";
-	cin >> time1.edit1;
-	cout << "Time : ";
-	cin >> time1.edit2;
-	for (int i = 0; i < counter_time; i++)
-	{
-		if (time1.Time1[i] == time1.edit2)
-		{
-			k = i;
-			flag1 = 1;
-		}
-
-	}
-	for (int i = 0; i < counter_time; i++)
-	{
-		if (time1.day[i] == time1.edit1)
-		{
-			l = i;
-			flag2 = 1;
-		}
-
-	}
-	if (flag1 == 1 && flag2 == 1)
-	{
-		cout << "Enter The New Appointment \n";
-		cout << "Day :";
-		cin >> time1.new1;
-		cout << "Time : ";
-		cin >> time1.new2;
-		time1.Time1[k] = time1.new1;
-		time1.day[l] = time1.new2;
-		cout << "The Appointment Has Been Successfully Modified\n";
-	}
-	else
-		cout << "\nThis Appointment Doesn't Found !";
-	cout << endl;
-}
-bool Find_Doctor()
-{
-	string doctorname; int search = 0;
-	cout << "Please Enter Doctor Name \n";
-	cin >> doctorname;
-	for (int i = 0; i < counter; i++)
-	{
-		if (doctorusername[i] == doctorname)
-		{
-			search = 1;
-		}
-	}
-	if (search == 1)
-	{
-		return true;
-	}
-	else
-		return false;
-}
 void Display_Doctors_Available_In_Certain_Appointment_Time()
 {
-	int j = 0; int k = 0, m = 0;
-	for (int i = 0; i < counter; i++)
-	{
-
-		cout << "Doctor : " << doctorusername[i] << endl;
-		while (k < time1.size[j])
-		{
-			if (time1.day[m] == "0" && time1.Time1[m] == "0")
-			{
-				cout << " ";
-			}
-			else
-			{
-				cout << "Day : " << time1.day[m] << endl;
-				cout << "Time : " << time1.Time1[m] << endl;
-			}
-			k++;
-			m++;
+	fstream display;
+	display.open("time.txt", ios::in);
+	if (display.is_open()) {
+		string tp;
+		while (getline(display, tp)) {
+			cout << tp << "\n";
 		}
-		j++;
-		k = 0;
+		display.close();
 	}
 }
 int main()
@@ -208,12 +204,12 @@ start:
 		cin >> choise2;
 		if (choise2 == 1)
 		{
-			Registrationas(doctorusername, doctorpassword, counter);
+			RegistrationasDoctor();
 			goto start2;
 		}
 		else if (choise2 == 2)
 		{
-			bool status = LogIn(doctorusername, doctorpassword, counter);
+			bool status = LogInDoctor();
 			if (!status)
 			{
 				cout << "\t\tWrong Usename Or Password ! \n";
@@ -247,15 +243,14 @@ start:
 					Add_Available_Time();
 					break;
 
-				case 3:
-					Edit_Available_Time();
-					break;
+				
 				case 5:
-					Edit_Info(doctorusername, doctorpassword, counter);
+					Edit_Info_Doctor();
 					break;
 				case 6:
 					goto start;
 					break;
+			
 				}
 
 			} while (choise3 != 7);
@@ -271,12 +266,12 @@ start:
 		cin >> choise2;
 		if (choise2 == 1)
 		{
-			Registrationas(patientusername, patientpassword, counter2);
+			RegistrationasPatient();
 			goto start3;
 		}
 		else if (choise2 == 2)
 		{
-			bool status = LogIn(patientusername, patientpassword, counter2);
+			bool status = LogInPatient();
 			if (!status)
 			{
 				cout << "\t\tWrong Usename Or Password ! \n";
@@ -306,26 +301,12 @@ start:
 				cin >> choise4;
 				switch (choise4)
 				{
-				case 1:
-				{
-					bool find = Find_Doctor();
-					if (!find)
-					{
-						cout << "Sorry, This Doctor Is Not Available\n";
-						cout << endl;
-					}
-					else
-					{
-						cout << "This Doctor Is Available\n";
-						cout << endl;
-					}
-					break;
-				}
+	
 				case 2:
 					Display_Doctors_Available_In_Certain_Appointment_Time();
 					break;
 				case 7:
-					Edit_Info(patientusername, patientpassword, counter2);
+					Edit_Info_Patient();
 					break;
 				case 8:
 					goto start;
