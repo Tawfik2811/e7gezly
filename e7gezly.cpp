@@ -129,7 +129,7 @@ void Registration(int choise)
 bool LogIn(int choise)
 {
 
-	string ans, psd, name, fname, bio, usern, pw, line, usn;
+	string ans, psd, name,fname, bio, usern, pw, line, usn;
 	ofstream fileo;
 	ifstream filei;
 
@@ -289,7 +289,7 @@ struct doctor_time {
 };
 doctor_time time1;
 void Add_Available_Time() {
-
+	
 	cout << "How Many Appointments Do You Want To Enter " << endl;
 	cin >> time1.size[counter_size];
 	for (int i = 0; i < time1.size[counter_size]; i++)
@@ -374,27 +374,6 @@ void Edit_Available_Time()
 	}
 
 }
-bool Find_Doctor()
-{
-	
-	string doctorname; int search = 0;
-	cout << "Please Enter Doctor Name \n";
-	cin >> doctorname;
-	for (int i = 0; i < counter; i++)
-	{
-		if (doctorusername[i] == doctorname)
-		{
-			search = 1;
-		}
-	}
-	if (search == 1)
-	{
-		return true;
-	}
-	else
-		return false;
-}
-
 int main()
 {
 	int choise1 = 0, choise2 = 0, choise3 = 0, choise4 = 0, flag1 = 0, flag2 = 0;
@@ -510,19 +489,8 @@ start:
 				cin >> choise4;
 				switch (choise4)
 				{
-				case 1:
-				{
-					bool find = Find_Doctor();
-					if (!find)
-					{
-						cout << "Sorry, This Doctor Is Not Available\n";
-					}
-					else
-					{
-						cout << "This Doctor Is Available\n";
-					}
-					break;
-				}
+				
+				
 				
 				case 7:
 					Edit_Info(2);
