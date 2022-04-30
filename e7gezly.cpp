@@ -106,6 +106,10 @@ void Registration(int choise)
 			cout << "\nYour bio is saved as: " << bio;
 			fileo.close();
 			exit = 1;
+			ofstream doctor_names;
+			doctor_names.open("DoctorNames.txt", std::ios::app);
+			doctor_names << name<<endl;
+			doctor_names.close();
 		}
 		else {
 			cout << "\nCreate a password:";
@@ -374,6 +378,41 @@ void Edit_Available_Time()
 	}
 
 }
+bool Find_Doctors()
+{
+	int number_of_lines = 0;
+	std::string line;
+	std::ifstream myfile("DoctorNames.txt");
+	while (std::getline(myfile, line))
+	{
+		++number_of_lines;
+	}
+	string names[100];
+	int count = 0;
+	ifstream find1;
+	find1.open("DoctorNames.txt");
+	while (count<number_of_lines && find1 >> names[count])
+	{
+		count++;
+	}
+	find1.close();
+	string doctorname; int search = 0;
+	cout << "Please Enter Doctor Name \n";
+	cin >> doctorname;
+	for (int i = 0; i < number_of_lines; i++)
+	{
+		if (names[i] == doctorname)
+		{
+			search = 1;
+		}
+	}
+	if (search == 1)
+	{
+		return true;
+	}
+	else
+		return false;
+}
 int main()
 {
 	int choise1 = 0, choise2 = 0, choise3 = 0, choise4 = 0, flag1 = 0, flag2 = 0;
@@ -489,8 +528,21 @@ start:
 				cin >> choise4;
 				switch (choise4)
 				{
-				
-				
+				case 1:
+				{
+					bool find = Find_Doctors();
+					if (!find)
+					{
+						cout << "Sorry, This Doctor Is Not Available\n";
+						cout << endl;
+					}
+					else
+					{
+						cout << "This Doctor Is Available\n";
+						cout << endl;
+					}
+					break;
+				}
 				
 				case 7:
 					Edit_Info(2);
