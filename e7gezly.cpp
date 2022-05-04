@@ -5,8 +5,7 @@
 #include<stdio.h>
 #include <cstring>
 using namespace std;
-string usn;
-int tm;
+string  username;
 string doctorusername[100];
 string doctorpassword[100];
 int counter = 0;
@@ -24,7 +23,7 @@ void RegistrationasDoctor()
 	cin >> doctorpassword[counter];
 	ofstream file;
 	file.open("registration doctor name.txt", std::ios::app);
-	file << doctorusername[counter] << endl ;
+	file << doctorusername[counter] << endl;
 	file.close();
 	ofstream pas;
 	pas.open("registration doctor pass.txt", std::ios::app);
@@ -51,7 +50,6 @@ void RegistrationasPatient()
 }
 bool LogInDoctor()
 {
-	string username;
 	string passaword;
 	string us;
 	string pas;
@@ -59,17 +57,17 @@ bool LogInDoctor()
 	cin >> username;
 	cout << "Enter Password : ";
 	cin >> passaword;
-	int number_of_lines = 0;
-	std::string line;
-	std::ifstream myfile("registration doctor name.txt");
-	while (std::getline(myfile, line))
-		++number_of_lines;
-	int count = 0;
+	int number_of_lines1 = 0;
+	std::string line1;
+	std::ifstream myfile1("registration doctor name.txt");
+	while (std::getline(myfile1, line1))
+		++number_of_lines1;
+	int count1 = 0;
 	ifstream edit1;
 	edit1.open("registration doctor name.txt");
-	while (count<number_of_lines && edit1 >> doctorusername[count])
+	while (count1<number_of_lines1 && edit1 >> doctorusername[count1])
 	{
-		count++;
+		count1++;
 	}
 	edit1.close();
 	int number_of_lines2 = 0;
@@ -88,7 +86,9 @@ bool LogInDoctor()
 	for (int i = 0; i < number_of_lines2; i++) {
 		if (doctorusername[i] == username && doctorpassword[i] == passaword)
 		{
+
 			return true;
+
 		}
 
 	}
@@ -143,33 +143,142 @@ void Edit_Info_Doctor()
 {
 	string us;
 	string pas;
-	int p = 0;
-	int flag1 = 0;
-start1:
+	string newpas;
+	string newname;
+	int k = 0, j = 0;
+	int flag = 0, flag2 = 0;
+start:
 	cout << "Enter Current Username : ";
 	cin >> us;
 	cout << "Enter Current Password : ";
 	cin >> pas;
-	for (int i = 0; i < counter; i++)
+	int number_of_lines1 = 0;
+	std::string line1;
+	std::ifstream myfile1("registration doctor name.txt");
+	while (std::getline(myfile1, line1))
+		++number_of_lines1;
+	int count1 = 0;
+	ifstream edit1;
+	edit1.open("registration doctor name.txt");
+	while (count1<number_of_lines1 && edit1 >> doctorusername[count1])
+	{
+		count1++;
+	}
+	edit1.close();
+	int number_of_lines2 = 0;
+	string edit[100];
+	std::string line2;
+	std::ifstream myfile2("time.txt");
+	while (std::getline(myfile2, line2))
+		++number_of_lines2;
+	int count2 = 0;
+	ifstream edit2;
+	edit2.open("time.txt");
+	while (count2<number_of_lines2 && edit2 >> edit[count2])
+	{
+		count2++;
+	}
+	edit2.close();
+	int number_of_lines3 = 0;
+	std::string line3;
+	std::ifstream myfile3("registration doctor pass.txt");
+	while (std::getline(myfile3, line3))
+		++number_of_lines3;
+	int count3 = 0;
+	ifstream edit3;
+	edit3.open("registration doctor pass.txt");
+	while (count3<number_of_lines3 && edit3 >> doctorpassword[count3])
+	{
+		count3++;
+	}
+	edit3.close();
+	for (int i = 0; i < number_of_lines1; i++)
 	{
 		if (doctorusername[i] == us && doctorpassword[i] == pas)
 		{
-			flag1 = 1;
-			p = i;
+			k = i;
+			flag = 1;
 		}
 	}
-	if (flag1 == 1)
+	for (int i = 0; i < number_of_lines2; i++)
 	{
-		cout << "Select Username : ";
-		cin >> doctorusername[p];
-		cout << "Select Password : ";
-		cin >> doctorpassword[p];
+		if (edit[i] == us)
+		{
+			j = i;
+			flag2 = 1;
+		}
+	}
+	if (flag == 1)
+	{
+		cout << "Enter New Username : ";
+		cin >> newname;
+		cout << "Enter New Password : ";
+		cin >> newpas;
+		doctorusername[k] = newname;
+		doctorpassword[k] = newpas;
+		edit[j] = newname;
+		edit1.open("registration doctor name.txt", ios::in);
+		if (edit1.is_open())
+		{
+			string tp1;
+			while (getline(edit1, tp1))
+			{
+				std::ofstream edit1;
+				edit1.open("registration doctor name.txt", std::ofstream::out | std::ofstream::trunc);
+				edit1.close();
+			}
+		}
+		edit2.open("time.txt", ios::in);
+		if (edit2.is_open())
+		{
+			string tp2;
+			while (getline(edit2, tp2))
+			{
+				std::ofstream edit2;
+				edit2.open("time.txt", std::ofstream::out | std::ofstream::trunc);
+				edit2.close();
+			}
+		}
+		edit3.open("registration doctor pass.txt", ios::in);
+		if (edit3.is_open())
+		{
+			string tp3;
+			while (getline(edit3, tp3))
+			{
+				std::ofstream edit3;
+				edit3.open("registration doctor pass.txt", std::ofstream::out | std::ofstream::trunc);
+				edit3.close();
+			}
+		}
+		for (int i = 0; i < number_of_lines1; i++)
+		{
+			ofstream edit1;
+			edit1.open("registration doctor name.txt", std::ios::app);
+			edit1 << doctorusername[i] << endl;
+			edit1.close();
+		}
+		for (int i = 0; i < number_of_lines3; i++)
+		{
+			ofstream edit3;
+			edit3.open("registration doctor pass.txt", std::ios::app);
+			edit3 << doctorpassword[i] << endl;
+			edit3.close();
+		}
+		for (int i = 0; i < number_of_lines2; i++)
+		{
+			ofstream edit2;
+			edit2.open("time.txt", std::ios::app);
+			edit2 << edit[i] << endl;
+			edit2.close();
+		}
+		cout << "Info Edited Sucssefuly\n";
 	}
 	else
 	{
-		cout << "\t\tWrong Usename Or Password ! \n";
-		cout << "\t\tPlease Try Agian \n";
-		goto start1;
+		cout << "Wrong Username Or Password\n";
+		cout << "Please Try Again\n";
+		cout << endl;
+		goto start;
 	}
 }
 void Edit_Info_Patient()
@@ -216,7 +325,10 @@ struct doctor_time {
 };
 doctor_time time1;
 void Add_Available_Time() {
-
+	ofstream time;
+	time.open("time.txt", std::ios::app);
+	time  << username << endl;
+	time.close();
 	cout << "How Many Appointments Do You Want To Enter " << endl;
 	cin >> time1.size[counter_size];
 	for (int i = 0; i < time1.size[counter_size]; i++)
@@ -229,7 +341,7 @@ void Add_Available_Time() {
 
 		ofstream time;
 		time.open("time.txt", std::ios::app);
-		time << time1.day[counter_time] << endl << time1.Time1[counter_time] << endl;
+		time  << time1.day[counter_time] << endl << time1.Time1[counter_time] << endl;
 		counter_time++;
 		time.close();
 	}
@@ -336,7 +448,18 @@ bool Find_Doctors()
 	else
 		return false;
 }
-
+void Display_Doctors()
+{
+	fstream display;
+	display.open("time.txt", ios::in);
+	if (display.is_open()) {
+		string tp;
+		while (getline(display, tp)) {
+			cout << tp << "\n";
+		}
+		display.close();
+	}
+}
 int main()
 {
 	int choise1 = 0, choise2 = 0, choise3 = 0, choise4 = 0, flag1 = 0, flag2 = 0;
@@ -468,7 +591,8 @@ start:
 					break;
 				}
 				case 2:
-					displayDoctors();
+					cout << endl;
+					Display_Doctors();
 					break;
 				case 7:
 					Edit_Info_Patient();
