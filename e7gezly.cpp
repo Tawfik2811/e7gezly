@@ -15,271 +15,194 @@ int counter_size = 0;
 string patientusername[100];
 string patientpassword[100];
 int counter2 = 0;
-void valid1(string str)
+void RegistrationasDoctor()
 {
-	int exit = 0;
-	string dir, user, fname1;
-	ifstream file;
-	fname1 = "doctor_" + usn + ".dta";
-	file.open(fname1.c_str());
 
-	if (!file.is_open() && file.fail())
+	cout << "Select Username : ";
+	cin >> doctorusername[counter];
+	cout << "Select Password : ";
+	cin >> doctorpassword[counter];
+	ofstream file;
+	file.open("registration doctor name.txt", std::ios::app);
+	file << doctorusername[counter] << endl ;
+	file.close();
+	ofstream pas;
+	pas.open("registration doctor pass.txt", std::ios::app);
+	pas << doctorpassword[counter] << endl;
+	pas.close();
+	counter++;
+}
+void RegistrationasPatient()
+{
+
+	cout << "Select Username : ";
+	cin >> patientusername[counter2];
+	cout << "Select Password : ";
+	cin >> patientpassword[counter2];
+	ofstream file;
+	file.open("registration patient name.txt", std::ios::app);
+	file << patientusername[counter2] << endl;
+	file.close();
+	ofstream pas;
+	pas.open("registration patient pass.txt", std::ios::app);
+	pas << patientpassword[counter] << endl;
+	pas.close();
+	counter2++;
+}
+bool LogInDoctor()
+{
+	string username;
+	string passaword;
+	string us;
+	string pas;
+	cout << "Enter Username : ";
+	cin >> username;
+	cout << "Enter Password : ";
+	cin >> passaword;
+	int number_of_lines = 0;
+	std::string line;
+	std::ifstream myfile("registration doctor name.txt");
+	while (std::getline(myfile, line))
+		++number_of_lines;
+	int count = 0;
+	ifstream edit1;
+	edit1.open("registration doctor name.txt");
+	while (count<number_of_lines && edit1 >> doctorusername[count])
 	{
-		file.close();
-		return;
+		count++;
 	}
-	else
+	edit1.close();
+	int number_of_lines2 = 0;
+	std::string line2;
+	std::ifstream myfile2("registration doctor pass.txt");
+	while (std::getline(myfile2, line2))
+		++number_of_lines2;
+	int count2 = 0;
+	ifstream edit2;
+	edit2.open("registration doctor pass.txt");
+	while (count2<number_of_lines2 && edit2 >> doctorpassword[count2])
 	{
-		tm++;
-		if (tm == 3)
+		count2++;
+	}
+	edit2.close();
+	for (int i = 0; i < number_of_lines2; i++) {
+		if (doctorusername[i] == username && doctorpassword[i] == passaword)
 		{
-			cout << "\nThis username already exists\nPlease try Again.";
-			file.close();
-			return;
-		}
-		cout << "\nThis username already exists!\nCreate a username:";
-		cin >> usn;
-		file.close();
-		valid1(usn);
-	}
-
-}
-void delet(char* name) {
-	remove(name);
-}
-void valid2(string str)
-{
-	string dir, user, fname1;
-	ifstream file;
-	fname1 = "patient_" + usn + ".dta";
-	file.open(fname1.c_str());
-	if (!file.is_open() && file.fail())
-	{
-		file.close();
-		return;
-	}
-	else
-	{
-		tm++;
-		if (tm == 3)
-		{
-			cout << "\nThis username already exists\nPlease try Again.";
-			file.close();
-			return;
-		}
-		cout << "\nThis username already exists!\nCreate a username:";
-		cin >> usn;
-		file.close();
-		valid2(usn);
-	}
-}
-void Registration(int choise)
-{
-	int exit = 0;
-	string ans, psd, name, fname, bio, usern, pw, line, nusn;
-	ofstream fileo;
-	ifstream filei;
-	while (exit == 0) {
-
-		cout << "\nEnter your name:";
-		cin.ignore();
-		getline(cin, name);
-		cout << "\nCreate a username:";
-		cin >> usn;
-		tm = 0;
-		valid1(usn);
-		if (tm >= 3)
-		{
-			break;
-		}
-		if (choise == 1) {
-			cout << "\nCreate a password:";
-			cin >> psd;
-			fname = "doctor_" + usn + ".dta";
-			fileo.open(fname.c_str());
-			fileo << usn << endl << name << endl << psd << endl;
-			cout << "\nYou are successfully registered:)";
-			cout << "\nAdd to your bio and press enter when you are done:";
-			cin.ignore();
-			getline(cin, bio);
-			fileo << bio << endl;
-			cout << "\nYour bio is saved as: " << bio;
-			fileo.close();
-			exit = 1;
-			ofstream doctor_names;
-			doctor_names.open("DoctorNames.txt", std::ios::app);
-			doctor_names << name<<endl;
-			doctor_names.close();
-		}
-		else {
-			cout << "\nCreate a password:";
-			cin >> psd;
-			fname = "patient_" + usn + ".dta";
-			fileo.open(fname.c_str());
-			fileo << usn << endl << name << endl << psd << endl;
-			cout << "\nYou are successfully registered:)";
-			cout << "\nAdd to your bio and press enter when you are done:";
-			cin.ignore();
-			getline(cin, bio);
-			fileo << bio << endl;
-			cout << "\nYour bio is saved as: " << bio;
-			fileo.close();
-			exit = 1;
-
-
-		}
-	}
-}
-bool LogIn(int choise)
-{
-
-	string ans, psd, name,fname, bio, usern, pw, line, usn;
-	ofstream fileo;
-	ifstream filei;
-
-	int exit = 0;
-	while (exit == 0)
-	{
-		if (choise == 2) {
-			cout << "Enter your username:";
-			cin >> usn;
-			cout << "\nEnter your password:";
-			cin >> psd;
-			fname = "doctor_" + usn + ".dta";
-			filei.open(fname.c_str());
-			if (!filei.is_open() && filei.fail())
-			{
-				cout << "\nYou are not registered, please register before logging in.\n";
-				filei.close();
-				break;
-			}
-			getline(filei, usern);
-			getline(filei, name);
-			getline(filei, pw);
-			if (usn == usern && psd == pw)
-			{
-				cout << "\t\tSuccessfully Loggedin\n\n";
-
-				cout << "\nhello doctor:" << name << "\nhope felling great today:\n";
-
-				exit = 1;
-
-			}
-			else {
-				cout << "\nWrong username or password!\nPlease try Again.\n";
-				return false;
-			}
-			cout << endl;
 			return true;
 		}
-		else {
-			cout << "Enter your username:";
-			cin >> usn;
-			cout << "\nEnter your password:";
-			cin >> psd;
-			fname = "patient_" + usn + ".dta";
-			filei.open(fname.c_str());
-			if (!filei.is_open() && filei.fail())
-			{
-				cout << "\nYou are not registered, please register before logging in.\n";
-				filei.close();
-				break;
-			}
-			getline(filei, usern);
-			getline(filei, name);
-			getline(filei, pw);
-			if (usn == usern && psd == pw)
-			{
-				cout << "\nhello patient:" << name << "\nhope felling good soon:\n";
 
-				exit = 1;
-			}
-			else {
-				cout << "\nWrong username or password!\nPlease try Again.\n";
-				return false;
-			}
-			cout << endl;
-			return true;
-
-
-		}
 	}
 	return false;
 }
-void Edit_Info(int choise)
+bool LogInPatient()
 {
-	string ans, psd, name, fname, bio, usern, pw, line, usn;
-	ofstream fileo;
-	ifstream filei;
-	int exit = 0;
-	while (exit == 0) {
-
-		cout << "Enter your old username:";
-		cin >> usn;
-		cout << "\nEnter your old password:";
-		cin >> psd;
-		if (choise == 1) {
-			fname = "doctor_" + usn + ".dta";
-			filei.open(fname.c_str());
-			if (!filei.is_open() && filei.fail())
-			{
-				cout << "\nWrong username or password!\nPlease try Again.\n";
-				filei.close();
-				exit = 1;
-			}
-			getline(filei, usern);
-			getline(filei, name);
-			getline(filei, pw);
-			getline(filei, line);
-			filei.close();
-			if (usn == usern && psd == pw)
-			{
-				cout << "your old data:\n";
-				cout << "User-name:" << usern << endl;
-				cout << "password:" << pw << endl;
-				cout << "Name:" << name << endl;
-				cout << "Bio:" << line << endl;
-				cout << "enter your new data\n";
-				remove(fname.c_str());
-				Registration(1);
-				exit = 1;
-
-			}
-			else {
-				cout << "\nWrong username or password!\nPlease try Again.\n";
-			}
+	string username;
+	string passaword;
+	string us;
+	string pas;
+	cout << "Enter Username : ";
+	cin >> username;
+	cout << "Enter Password : ";
+	cin >> passaword;
+	int number_of_lines = 0;
+	std::string line;
+	std::ifstream myfile("registration patient name.txt");
+	while (std::getline(myfile, line))
+		++number_of_lines;
+	int count = 0;
+	ifstream edit1;
+	edit1.open("registration patient name.txt");
+	while (count<number_of_lines && edit1 >> patientusername[count])
+	{
+		count++;
+	}
+	edit1.close();
+	int number_of_lines2 = 0;
+	std::string line2;
+	std::ifstream myfile2("registration patient pass.txt");
+	while (std::getline(myfile2, line2))
+		++number_of_lines2;
+	int count2 = 0;
+	ifstream edit2;
+	edit2.open("registration patient pass.txt");
+	while (count2<number_of_lines2 && edit2 >> patientpassword[count2])
+	{
+		count2++;
+	}
+	edit2.close();
+	for (int i = 0; i < number_of_lines2; i++) {
+		if (patientusername[i] == username && patientpassword[i] == passaword) {
+			return true;
 		}
-		else {
-			fname = "patient_" + usn + ".dta";
-			filei.open(fname.c_str());
-			if (!filei.is_open() && filei.fail())
-			{
-				cout << "\nWrong username or password!\nPlease try Again.\n";
-				filei.close();
-				exit = 1;
-			}
-			getline(filei, usern);
-			getline(filei, name);
-			getline(filei, pw);
-			getline(filei, line);
-			filei.close();
-			if (usn == usern && psd == pw)
-			{
-				cout << "your old data:\n";
-				cout << "User-name:" << usern << endl;
-				cout << "password:" << pw << endl;
-				cout << "Name:" << name << endl;
-				cout << "Bio:" << line << endl;
-				cout << "enter your new data\n";
-				remove(fname.c_str());
-				Registration(1);
-				exit = 1;
 
-			}
-			else {
-				cout << "\nWrong username or password!\nPlease try Again.\n";
-			}
+	}
+	return false;
+
+}
+void Edit_Info_Doctor()
+{
+	string us;
+	string pas;
+	int p = 0;
+	int flag1 = 0;
+start1:
+	cout << "Enter Current Username : ";
+	cin >> us;
+	cout << "Enter Current Password : ";
+	cin >> pas;
+	for (int i = 0; i < counter; i++)
+	{
+		if (doctorusername[i] == us && doctorpassword[i] == pas)
+		{
+			flag1 = 1;
+			p = i;
 		}
+	}
+	if (flag1 == 1)
+	{
+		cout << "Select Username : ";
+		cin >> doctorusername[p];
+		cout << "Select Password : ";
+		cin >> doctorpassword[p];
+	}
+	else
+	{
+		cout << "\t\tWrong Usename Or Password ! \n";
+		cout << "\t\tPlease Try Agian \n";
+		goto start1;
+	}
+}
+void Edit_Info_Patient()
+{
+	string us;
+	string pas;
+	int p = 0;
+	int flag1 = 0;
+start1:
+	cout << "Enter Current Username : ";
+	cin >> us;
+	cout << "Enter Current Password : ";
+	cin >> pas;
+	for (int i = 0; i < counter2; i++)
+	{
+		if (patientusername[i] == us && patientpassword[i] == pas)
+		{
+			flag1 = 1;
+			p = i;
+		}
+	}
+	if (flag1 == 1)
+	{
+		cout << "Select Username : ";
+		cin >> patientusername[p];
+		cout << "Select Password : ";
+		cin >> patientpassword[p];
+	}
+	else
+	{
+		cout << "\t\tWrong Usename Or Password ! \n";
+		cout << "\t\tPlease Try Agian \n";
+		goto start1;
 	}
 }
 struct doctor_time {
@@ -293,7 +216,7 @@ struct doctor_time {
 };
 doctor_time time1;
 void Add_Available_Time() {
-	
+
 	cout << "How Many Appointments Do You Want To Enter " << endl;
 	cin >> time1.size[counter_size];
 	for (int i = 0; i < time1.size[counter_size]; i++)
@@ -336,7 +259,7 @@ void Edit_Available_Time()
 	cin >> time1.edit2;
 	for (int i = 0; i < number_of_lines; i++)
 	{
-		if (time[i] == time1.edit1 && time[i+1]==time1.edit2)
+		if (time[i] == time1.edit1 && time[i + 1] == time1.edit2)
 		{
 			k = i;
 			flag1 = 1;
@@ -362,7 +285,7 @@ void Edit_Available_Time()
 				edit1.close();
 			}
 		}
-		
+
 		for (int i = 0; i < number_of_lines; i++)
 		{
 			ofstream edit1;
@@ -413,6 +336,7 @@ bool Find_Doctors()
 	else
 		return false;
 }
+
 int main()
 {
 	int choise1 = 0, choise2 = 0, choise3 = 0, choise4 = 0, flag1 = 0, flag2 = 0;
@@ -434,13 +358,13 @@ start:
 		cin >> choise2;
 		if (choise2 == 1)
 		{
-			Registration(choise2);
+			RegistrationasDoctor();
 			goto start2;
 
 		}
 		else if (choise2 == 2)
 		{
-			bool status = LogIn(choise2);
+			bool status = LogInDoctor();
 			if (status)
 			{
 				cout << endl;
@@ -473,7 +397,7 @@ start:
 					Edit_Available_Time();
 					break;
 				case 5:
-					Edit_Info(1);
+					Edit_Info_Doctor();
 					break;
 				case 6:
 					goto start;
@@ -495,13 +419,13 @@ start:
 		if (choise2 == 1)
 		{
 			choise2 = 2;
-			Registration(choise2);
+			RegistrationasPatient();
 			goto start3;
 		}
 		else if (choise2 == 2)
 		{
 			choise2 = 1;
-			bool status = LogIn(choise2);
+			bool status = LogInPatient();
 			if (status)
 			{
 				cout << endl;
@@ -543,9 +467,11 @@ start:
 					}
 					break;
 				}
-				
+				case 2:
+					displayDoctors();
+					break;
 				case 7:
-					Edit_Info(2);
+					Edit_Info_Patient();
 					break;
 				case 8:
 					goto start;
