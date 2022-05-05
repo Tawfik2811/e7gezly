@@ -500,14 +500,17 @@ start:
 		else if (choise2 == 2)
 		{
 			bool status = LogInDoctor();
-			if (status)
+			if (!status)
 			{
-				cout << endl;
-				flag1 = 1;
+				cout << "\t\tWrong Usename Or Password ! \n";
+				cout << "\t\tPlease Try Agian \n";
+				goto start2;
 			}
 			else
 			{
-				goto start2;
+				cout << endl;
+				cout << "\t\tSuccessfully Loggedin\n\n";
+				flag1 = 1;
 			}
 		}
 		if (flag1 == 1)
@@ -561,14 +564,17 @@ start:
 		{
 			choise2 = 1;
 			bool status = LogInPatient();
-			if (status)
+			if (!status)
 			{
-				cout << endl;
-				flag2 = 1;
+				cout << "\t\tWrong Usename Or Password ! \n";
+				cout << "\t\tPlease Try Agian \n";
+				goto start3;
 			}
 			else
 			{
-				goto start2;
+				cout << endl;
+				cout << "\t\tSuccessfully Loggedin\n\n";
+				flag1 = 1;
 			}
 		}
 		if (flag2 == 1)
