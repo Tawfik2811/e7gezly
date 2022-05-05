@@ -165,20 +165,6 @@ start:
 		count1++;
 	}
 	edit1.close();
-	int number_of_lines2 = 0;
-	string edit[100];
-	std::string line2;
-	std::ifstream myfile2("time.txt");
-	while (std::getline(myfile2, line2))
-		++number_of_lines2;
-	int count2 = 0;
-	ifstream edit2;
-	edit2.open("time.txt");
-	while (count2<number_of_lines2 && edit2 >> edit[count2])
-	{
-		count2++;
-	}
-	edit2.close();
 	int number_of_lines3 = 0;
 	std::string line3;
 	std::ifstream myfile3("registration doctor pass.txt");
@@ -200,14 +186,6 @@ start:
 			flag = 1;
 		}
 	}
-	for (int i = 0; i < number_of_lines2; i++)
-	{
-		if (edit[i] == us)
-		{
-			j = i;
-			flag2 = 1;
-		}
-	}
 	if (flag == 1)
 	{
 		cout << "Enter New Username : ";
@@ -216,7 +194,6 @@ start:
 		cin >> newpas;
 		doctorusername[k] = newname;
 		doctorpassword[k] = newpas;
-		edit[j] = newname;
 		edit1.open("registration doctor name.txt", ios::in);
 		if (edit1.is_open())
 		{
@@ -226,17 +203,6 @@ start:
 				std::ofstream edit1;
 				edit1.open("registration doctor name.txt", std::ofstream::out | std::ofstream::trunc);
 				edit1.close();
-			}
-		}
-		edit2.open("time.txt", ios::in);
-		if (edit2.is_open())
-		{
-			string tp2;
-			while (getline(edit2, tp2))
-			{
-				std::ofstream edit2;
-				edit2.open("time.txt", std::ofstream::out | std::ofstream::trunc);
-				edit2.close();
 			}
 		}
 		edit3.open("registration doctor pass.txt", ios::in);
@@ -263,13 +229,6 @@ start:
 			edit3.open("registration doctor pass.txt", std::ios::app);
 			edit3 << doctorpassword[i] << endl;
 			edit3.close();
-		}
-		for (int i = 0; i < number_of_lines2; i++)
-		{
-			ofstream edit2;
-			edit2.open("time.txt", std::ios::app);
-			edit2 << edit[i] << endl;
-			edit2.close();
 		}
 		cout << "Info Edited Sucssefuly\n";
 	}
@@ -383,7 +342,6 @@ start:
 		goto start;
 	}
 }
-
 struct doctor_time {
 	int size[100] = { 0 };
 	string Time1[100];
@@ -395,10 +353,6 @@ struct doctor_time {
 };
 doctor_time time1;
 void Add_Available_Time() {
-	ofstream time;
-	time.open("time.txt", std::ios::app);
-	time << username << endl;
-	time.close();
 	cout << "How Many Appointments Do You Want To Enter " << endl;
 	cin >> time1.size[counter_size];
 	for (int i = 0; i < time1.size[counter_size]; i++)
@@ -434,7 +388,7 @@ void Edit_Available_Time()
 	}
 	edit1.close();
 	int k = 0, m = 0, flag1 = 0, flag2 = 0, flag3 = 0, l = 0;
-	cout << "Please Enter The Appoiment You Want TO Modify" << endl;
+	cout << "Please Enter The Appoiment You Want To Modify" << endl;
 	cout << "Day : ";
 	cin >> time1.edit1;
 	cout << "Time : ";
@@ -517,23 +471,6 @@ bool Find_Doctors()
 	}
 	else
 		return false;
-}
-void Display_Doctors()
-{
-	fstream display;
-	display.open("time.txt", ios::in);
-	if (display.is_open())
-	{
-		string tp;
-		while (getline(display, tp)) 
-		{
-			cout << tp << "\n";
-		}
-		display.close();
-	}
-	cout << endl;
-	
-
 }
 int main()
 {
@@ -665,10 +602,6 @@ start:
 					}
 					break;
 				}
-				case 2:
-					cout << endl;
-					Display_Doctors();
-					break;
 				case 7:
 					Edit_Info_Patient();
 					break;
