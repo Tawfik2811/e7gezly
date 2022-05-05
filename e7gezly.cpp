@@ -327,7 +327,7 @@ doctor_time time1;
 void Add_Available_Time() {
 	ofstream time;
 	time.open("time.txt", std::ios::app);
-	time  << username << endl;
+	time << username << endl;
 	time.close();
 	cout << "How Many Appointments Do You Want To Enter " << endl;
 	cin >> time1.size[counter_size];
@@ -341,7 +341,7 @@ void Add_Available_Time() {
 
 		ofstream time;
 		time.open("time.txt", std::ios::app);
-		time  << time1.day[counter_time] << endl << time1.Time1[counter_time] << endl;
+		time << time1.day[counter_time] << endl << time1.Time1[counter_time] << endl;
 		counter_time++;
 		time.close();
 	}
@@ -417,7 +417,7 @@ bool Find_Doctors()
 {
 	int number_of_lines = 0;
 	std::string line;
-	std::ifstream myfile("DoctorNames.txt");
+	std::ifstream myfile("registration doctor name.txt");
 	while (std::getline(myfile, line))
 	{
 		++number_of_lines;
@@ -425,7 +425,7 @@ bool Find_Doctors()
 	string names[100];
 	int count = 0;
 	ifstream find1;
-	find1.open("DoctorNames.txt");
+	find1.open("registration doctor name.txt");
 	while (count<number_of_lines && find1 >> names[count])
 	{
 		count++;
