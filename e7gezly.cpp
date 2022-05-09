@@ -944,7 +944,7 @@ start:
 					Add_Available_Time();
 					break;
 				case 2:
-					Delete_Appoiments_Doctors();
+					 Delete_Appoiments_Doctor();
 					break;
 				case 3:
 					Edit_Available_Time();
