@@ -895,7 +895,7 @@ void book()
 		}
 	}
 }
-void view_patient()
+void View_Appointment_Doctor()
 {
 	int number_of_lines3 = 0;
 	string line3;
@@ -922,7 +922,7 @@ void view_patient()
 		}
 	}
 }
-void ViewAppointment() {
+void View_Appointment_Patient() {
 	int number_of_lines3 = 0;
 	string line3;
 	ifstream myfile3("time selected.txt");
@@ -1014,7 +1014,7 @@ start:
 					Edit_Available_Time_Doctor();
 					break;
 				case 4:
-					view_patient();
+					View_Appointment_Doctor();
 					break;
 				case 5:
 					Edit_Info_Doctor();
@@ -1094,7 +1094,7 @@ start:
 					book();
 					break;
 				case 3:
-					ViewAppointment();
+					View_Appointment_Patient();
 					break;
 				case 4:
 					Edit_Available_Time_Patient();
