@@ -426,7 +426,7 @@ start:
 	}
 }
 struct doctor_time {
-	int size;
+	int size=0;
 	string Time1[100];
 	string day[100];
 	string edit1;
@@ -556,7 +556,7 @@ void Delete_Appoiments_Doctor()
 	
 	}
 }
-void Edit_Available_Time()
+void Edit_Available_Time_Doctor()
 {
 	int number_of_lines1 = 0;
 	string line1;
@@ -586,7 +586,7 @@ void Edit_Available_Time()
 		count2++;
 	}
 	edit2.close();
-	int k = 0, m = 0, flag1 = 0, flag2 = 0, flag3 = 0, l = 0;
+	int k = 0, flag1 = 0;
 	cout << "Please Enter The Appoiment You Want To Modify" << endl;
 	cout << "Day : ";
 	cin >> time1.edit1;
@@ -653,6 +653,70 @@ void Edit_Available_Time()
 		cout << endl;
 	}
 
+}
+void Edit_Available_Time_Patient()
+{
+	int number_of_lines1 = 0;
+	string timeselected[100];
+	string line1;
+	ifstream myfile1("time selected.txt");
+	while (getline(myfile1, line1))
+		++number_of_lines1;
+	int count1 = 0;
+	ifstream edit1;
+	edit1.open("time selected.txt");
+	while (count1<number_of_lines1 && edit1 >> timeselected[count1])
+	{
+		count1++;
+	}
+	edit1.close();
+	int k = 0, flag1 = 0;
+	cout << "Please Enter The Appoiment You Want To Modify" << endl;
+	cout << "Day : ";
+	cin >> time1.edit1;
+	cout << "Time : ";
+	cin >> time1.edit2;
+	for (int i = 0; i < number_of_lines1; i++)
+	{
+		if (timeselected[i] == time1.edit1 && timeselected[i + 1] == time1.edit2)
+		{
+			k = i;
+			flag1 = 1;
+		}
+	}
+	if (flag1 == 1)
+	{
+		cout << "Enter The New Appoiment \n";
+		cout << "Day : ";
+		cin >> time1.new1;
+		cout << "Time : ";
+		cin >> time1.new2;
+		timeselected[k] = time1.new1;
+		timeselected[k + 1] = time1.new2;
+		edit1.open("time selected.txt", ios::in);
+		if (edit1.is_open())
+		{
+			string tp1;
+			while (getline(edit1, tp1))
+			{
+				ofstream edit1;
+				edit1.open("time selected.txt", std::ofstream::out | std::ofstream::trunc);
+				edit1.close();
+			}
+		}
+		for (int i = 0; i < number_of_lines1; i++)
+		{
+			ofstream edit1;
+			edit1.open("time selected.txt", std::ios::app);
+			edit1 << timeselected[i] << endl;
+			edit1.close();
+		}
+		cout << "The Appointment Has Been Modified Successfully\n\n";
+	}
+	else
+	{
+		cout << "\nThis Appoiment Doesn't Found !\n";
+	}
 }
 bool Find_Doctors()
 {
@@ -858,7 +922,7 @@ void view_patient()
 		}
 	}
 }
-void ViewAppontment() {
+void ViewAppointment() {
 	int number_of_lines3 = 0;
 	string line3;
 	ifstream myfile3("time selected.txt");
@@ -944,10 +1008,10 @@ start:
 					Add_Available_Time();
 					break;
 				case 2:
-					 Delete_Appoiments_Doctor();
+					Delete_Appoiments_Doctor();
 					break;
 				case 3:
-					Edit_Available_Time();
+					Edit_Available_Time_Doctor();
 					break;
 				case 4:
 					view_patient();
@@ -1030,9 +1094,11 @@ start:
 					book();
 					break;
 				case 3:
-					ViewAppontment();
+					ViewAppointment();
 					break;
-			
+				case 4:
+					Edit_Available_Time_Patient();
+						break;
 				case 7:
 					Edit_Info_Patient();
 					break;
