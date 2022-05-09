@@ -198,8 +198,8 @@ start:
 			flag = 1;
 		}
 	}
-	
-	
+
+
 	if (flag == 1)
 	{
 		cout << "Enter New Username : ";
@@ -285,8 +285,8 @@ void Edit_Info_Patient()
 	string pas;
 	string newpas;
 	string newname;
-	int k = 0,j=0;
-	int flag = 0,flag2=0;
+	int k = 0, j = 0;
+	int flag = 0, flag2 = 0;
 start:
 	cout << "Enter Current Username : ";
 	cin >> us;
@@ -426,7 +426,7 @@ start:
 	}
 }
 struct doctor_time {
-	int size=0;
+	int size = 0;
 	string Time1[100];
 	string day[100];
 	string edit1;
@@ -553,7 +553,7 @@ void Delete_Appoiments_Doctor()
 	else
 	{
 		cout << "\nThis Appoiment Doesn't Found !\n";
-	
+
 	}
 }
 void Edit_Available_Time_Doctor()
@@ -586,136 +586,100 @@ void Edit_Available_Time_Doctor()
 		count2++;
 	}
 	edit2.close();
-	int k = 0, flag1 = 0;
-	cout << "Please Enter The Appoiment You Want To Modify" << endl;
-	cout << "Day : ";
-	cin >> time1.edit1;
-	cout << "Time : ";
-	cin >> time1.edit2;
-	for (int i = 0; i < number_of_lines2; i++)
-	{
-		if (time[i] == time1.edit2 && day[i] == time1.edit1)
-		{
-			k = i;
-			flag1 = 1;
-		}
-	}
-	if (flag1 == 1)
-	{
-
-		cout << "Enter The New Appoiment \n";
-		cout << "Day : ";
-		cin >> time1.new1;
-		cout << "Time : ";
-		cin >> time1.new2;
-		day[k] = time1.new1;
-		time[k] = time1.new2;
-		edit1.open("time.txt", ios::in);
-		if (edit1.is_open())
-		{
-			string tp;
-			while (getline(edit1, tp))
-			{
-				std::ofstream edit1;
-				edit1.open("time.txt", std::ofstream::out | std::ofstream::trunc);
-				edit1.close();
-			}
-		}
-		for (int i = 0; i < number_of_lines1; i++)
-		{
-			ofstream edit1;
-			edit1.open("time.txt", std::ios::app);
-			edit1 << time[i] << endl;
-			edit1.close();
-		}
-		edit2.open("day.txt", ios::in);
-		if (edit2.is_open())
-		{
-			string tp2;
-			while (getline(edit2, tp2))
-			{
-				std::ofstream edit2;
-				edit2.open("day.txt", std::ofstream::out | std::ofstream::trunc);
-				edit2.close();
-			}
-		}
-		for (int i = 0; i < number_of_lines2; i++)
-		{
-			ofstream edit2;
-			edit2.open("day.txt", std::ios::app);
-			edit2 << day[i] << endl;
-			edit2.close();
-		}
-	}
-	else
-	{
-		cout << "\nThis Appoiment Doesn't Found !";
-		cout << endl;
-	}
-
-}
-void Edit_Available_Time_Patient()
-{
-	int number_of_lines1 = 0;
+	int number_of_lines3 = 0;
 	string timeselected[100];
-	string line1;
-	ifstream myfile1("time selected.txt");
-	while (getline(myfile1, line1))
-		++number_of_lines1;
-	int count1 = 0;
-	ifstream edit1;
-	edit1.open("time selected.txt");
-	while (count1<number_of_lines1 && edit1 >> timeselected[count1])
+	string line3;
+	ifstream myfile3("time selected.txt");
+	while (getline(myfile3, line3))
+		++number_of_lines3;
+	int count3 = 0;
+	ifstream edit3;
+	edit3.open("time selected.txt");
+	while (count3<number_of_lines3 && edit3 >> timeselected[count3])
 	{
-		count1++;
+		count3++;
 	}
-	edit1.close();
+	edit3.close();
 	int k = 0, flag1 = 0;
 	cout << "Please Enter The Appoiment You Want To Modify" << endl;
 	cout << "Day : ";
 	cin >> time1.edit1;
 	cout << "Time : ";
 	cin >> time1.edit2;
-	for (int i = 0; i < number_of_lines1; i++)
+		int flag3 = 0;
+	for (int i = 0; i < number_of_lines3; i++)
 	{
 		if (timeselected[i] == time1.edit1 && timeselected[i + 1] == time1.edit2)
 		{
-			k = i;
-			flag1 = 1;
+			flag3 = 1;
 		}
 	}
-	if (flag1 == 1)
+	if (flag3 = 1)
 	{
-		cout << "Enter The New Appoiment \n";
-		cout << "Day : ";
-		cin >> time1.new1;
-		cout << "Time : ";
-		cin >> time1.new2;
-		timeselected[k] = time1.new1;
-		timeselected[k + 1] = time1.new2;
-		edit1.open("time selected.txt", ios::in);
-		if (edit1.is_open())
-		{
-			string tp1;
-			while (getline(edit1, tp1))
-			{
-				ofstream edit1;
-				edit1.open("time selected.txt", std::ofstream::out | std::ofstream::trunc);
-				edit1.close();
-			}
-		}
-		for (int i = 0; i < number_of_lines1; i++)
-		{
-			ofstream edit1;
-			edit1.open("time selected.txt", std::ios::app);
-			edit1 << timeselected[i] << endl;
-			edit1.close();
-		}
-		cout << "The Appointment Has Been Modified Successfully\n\n";
+		cout << "You Cannot Change This Appointment Because It Is Already Booked\n\n";
 	}
 	else
 	{
-		cout << "\nThis Appoiment Doesn't Found !\n";
+		for (int i = 0; i < number_of_lines2; i++)
+		{
+			if (time[i] == time1.edit2 && day[i] == time1.edit1)
+			{
+				k = i;
+				flag1 = 1;
+			}
+		}
+		if (flag1 == 1)
+		{
+
+			cout << "Enter The New Appoiment \n";
+			cout << "Day : ";
+			cin >> time1.new1;
+			cout << "Time : ";
+			cin >> time1.new2;
+			day[k] = time1.new1;
+			time[k] = time1.new2;
+			edit1.open("time.txt", ios::in);
+			if (edit1.is_open())
+			{
+				string tp;
+				while (getline(edit1, tp))
+				{
+					std::ofstream edit1;
+					edit1.open("time.txt", std::ofstream::out | std::ofstream::trunc);
+					edit1.close();
+				}
+			}
+			for (int i = 0; i < number_of_lines1; i++)
+			{
+				ofstream edit1;
+				edit1.open("time.txt", std::ios::app);
+				edit1 << time[i] << endl;
+				edit1.close();
+			}
+			edit2.open("day.txt", ios::in);
+			if (edit2.is_open())
+			{
+				string tp2;
+				while (getline(edit2, tp2))
+				{
+					std::ofstream edit2;
+					edit2.open("day.txt", std::ofstream::out | std::ofstream::trunc);
+					edit2.close();
+				}
+			}
+			for (int i = 0; i < number_of_lines2; i++)
+			{
+				ofstream edit2;
+				edit2.open("day.txt", std::ios::app);
+				edit2 << day[i] << endl;
+				edit2.close();
+			}
+		}
+		else
+		{
+			cout << "\nThis Appoiment Doesn't Found !";
+			cout << endl;
+		}
 	}
 }
 bool Find_Doctors()
@@ -916,9 +880,9 @@ void View_Appointment_Doctor()
 	{
 		if (name[i] == username)
 		{
-			cout <<"Patient : " << name[i + 1] << endl;
-			cout <<"Day : " << name[i + 2] << endl;
-			cout<< "Time : " << name[i + 3] << endl;
+			cout << "Patient : " << name[i + 1] << endl;
+			cout << "Day : " << name[i + 2] << endl;
+			cout << "Time : " << name[i + 3] << endl;
 		}
 	}
 }
@@ -942,7 +906,7 @@ void View_Appointment_Patient() {
 	{
 		if (name[i] == usernamepatient)
 		{
-			cout << "Doctor : " << name[i -1] << endl;
+			cout << "Doctor : " << name[i - 1] << endl;
 			cout << "Day : " << name[i + 1] << endl;
 			cout << "Time : " << name[i + 2] << endl;
 		}
@@ -1096,9 +1060,6 @@ start:
 				case 3:
 					View_Appointment_Patient();
 					break;
-				case 4:
-					Edit_Available_Time_Patient();
-						break;
 				case 7:
 					Edit_Info_Patient();
 					break;
