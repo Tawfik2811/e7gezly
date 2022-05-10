@@ -436,6 +436,7 @@ struct doctor_time {
 doctor_time time1;
 void Add_Available_Time() {
 	cout << "How Many Appointments Do You Want To Add " << endl;
+	cout << "Your Choise : ";
 	cin >> time1.size;
 	ofstream size;
 	size.open("size.txt", std::ios::app);
@@ -495,61 +496,90 @@ void Delete_Appoiments_Doctor()
 		count2++;
 	}
 	edit2.close();
-	int flag1 = 0, k = 0;
-	for (int i = 0; i < number_of_lines2; i++)
+	int number_of_lines3 = 0;
+	string timeselected[100];
+	string line3;
+	ifstream myfile3("time selected.txt");
+	while (getline(myfile3, line3))
+		++number_of_lines3;
+	int count3 = 0;
+	ifstream edit3;
+	edit3.open("time selected.txt");
+	while (count3<number_of_lines3 && edit3 >> timeselected[count3])
 	{
-		if (time[i] == time1.deleted2 && day[i] == time1.deleted1)
+		count3++;
+	}
+	edit3.close();
+	int flag4 = 0;
+	for (int i = 0; i < number_of_lines3; i++)
+	{
+		if (timeselected[i] == time1.deleted1 && timeselected[i + 1] == time1.deleted2)
 		{
-			k = i;
-			flag1 = 1;
+			flag4 = 1;
 		}
 	}
-	if (flag1 == 1)
+	if (flag4 = 1)
 	{
-		time[k] = '0';
-		day[k] = '0';
-		edit1.open("time.txt", ios::in);
-		if (edit1.is_open())
-		{
-			string tp;
-			while (getline(edit1, tp))
-			{
-				std::ofstream edit1;
-				edit1.open("time.txt", std::ofstream::out | std::ofstream::trunc);
-				edit1.close();
-			}
-		}
-		for (int i = 0; i < number_of_lines1; i++)
-		{
-			ofstream edit1;
-			edit1.open("time.txt", std::ios::app);
-			edit1 << time[i] << endl;
-			edit1.close();
-		}
-		edit2.open("day.txt", ios::in);
-		if (edit2.is_open())
-		{
-			string tp2;
-			while (getline(edit2, tp2))
-			{
-				std::ofstream edit2;
-				edit2.open("day.txt", std::ofstream::out | std::ofstream::trunc);
-				edit2.close();
-			}
-		}
-		for (int i = 0; i < number_of_lines2; i++)
-		{
-			ofstream edit2;
-			edit2.open("day.txt", std::ios::app);
-			edit2 << day[i] << endl;
-			edit2.close();
-		}
-		cout << "Appointment Deleted Successfully\n\n";
+		cout << "You Cannot Change This Appointment Because It Is Already Booked\n\n";
 	}
 	else
 	{
-		cout << "\nThis Appoiment Doesn't Found !\n";
+		int flag1 = 0, k = 0;
+		for (int i = 0; i < number_of_lines2; i++)
+		{
+			if (time[i] == time1.deleted2 && day[i] == time1.deleted1)
+			{
+				k = i;
+				flag1 = 1;
+			}
+		}
+		if (flag1 == 1)
+		{
+			time[k] = '0';
+			day[k] = '0';
+			edit1.open("time.txt", ios::in);
+			if (edit1.is_open())
+			{
+				string tp;
+				while (getline(edit1, tp))
+				{
+					std::ofstream edit1;
+					edit1.open("time.txt", std::ofstream::out | std::ofstream::trunc);
+					edit1.close();
+				}
+			}
+			for (int i = 0; i < number_of_lines1; i++)
+			{
+				ofstream edit1;
+				edit1.open("time.txt", std::ios::app);
+				edit1 << time[i] << endl;
+				edit1.close();
+			}
+			edit2.open("day.txt", ios::in);
+			if (edit2.is_open())
+			{
+				string tp2;
+				while (getline(edit2, tp2))
+				{
+					std::ofstream edit2;
+					edit2.open("day.txt", std::ofstream::out | std::ofstream::trunc);
+					edit2.close();
+				}
+			}
+			for (int i = 0; i < number_of_lines2; i++)
+			{
+				ofstream edit2;
+				edit2.open("day.txt", std::ios::app);
+				edit2 << day[i] << endl;
+				edit2.close();
+			}
+			cout << "Appointment Deleted Successfully\n\n";
+		}
+		else
+		{
+			cout << "\nThis Appoiment Doesn't Found !\n";
 
+		}
 	}
 }
 void Edit_Available_Time_Doctor()
@@ -610,7 +640,7 @@ void Edit_Available_Time_Doctor()
 			flag3 = 1;
 		}
 	}
-	if (flag3 = 1)
+	if (flag3 == 1)
 	{
 		cout << "You Cannot Change This Appointment Because It Is Already Booked\n\n";
 	}
@@ -836,6 +866,7 @@ void book()
 		{
 			cout << "To Confirm The Booking Process, Please Press 1\n";
 		start1:
+			cout << "Enter Your Choise : ";
 			cin >> test;
 			if (test == 1) {
 				cout << "Please Enter The Doctor's Name\n";
@@ -1180,7 +1211,8 @@ start:
 				cout << "4- View Patients With Appoiments\n";
 				cout << "5- Edit Info (username,password) \n";
 				cout << "6- Logout \n";
-				cout << "7- To Close The Program \n";
+				cout << "7- To Close The Program \n\n";
+				cout << "Your Choise : ";
 				cin >> choise3;
 				switch (choise3) {
 				case 1:
@@ -1250,7 +1282,8 @@ start:
 				cout << "6- Clear Appointments history\n";
 				cout << "7- Edit Basic Info ( username/password)\n";
 				cout << "8- Logout \n";
-				cout << "9- To Close The Program \n";
+				cout << "9- To Close The Program \n\n";
+				cout << " Enter Your Choise : ";
 				cin >> choise4;
 				switch (choise4)
 				{
