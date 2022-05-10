@@ -5,7 +5,7 @@
 #include<stdio.h>
 #include <cstring>
 using namespace std;
-int counter, counter2;
+int counter=0, counter2=0;
 string  username;
 string usernamepatient;
 string doctorusername[100];
@@ -56,9 +56,9 @@ bool LogInDoctor()
 	cout << "Enter Password : ";
 	cin >> passaword;
 	int number_of_lines1 = 0;
-	std::string line1;
-	std::ifstream myfile1("registration doctor name.txt");
-	while (std::getline(myfile1, line1))
+	string line1;
+	ifstream myfile1("registration doctor name.txt");
+	while (getline(myfile1, line1))
 		++number_of_lines1;
 	int count1 = 0;
 	ifstream edit1;
@@ -69,9 +69,9 @@ bool LogInDoctor()
 	}
 	edit1.close();
 	int number_of_lines2 = 0;
-	std::string line2;
-	std::ifstream myfile2("registration doctor pass.txt");
-	while (std::getline(myfile2, line2))
+	string line2;
+	ifstream myfile2("registration doctor pass.txt");
+	while (getline(myfile2, line2))
 		++number_of_lines2;
 	int count2 = 0;
 	ifstream edit2;
@@ -84,9 +84,7 @@ bool LogInDoctor()
 	for (int i = 0; i < number_of_lines2; i++) {
 		if (doctorusername[i] == username && doctorpassword[i] == passaword)
 		{
-
 			return true;
-
 		}
 
 	}
@@ -103,9 +101,9 @@ bool LogInPatient()
 	cout << "Enter Password : ";
 	cin >> passaword;
 	int number_of_lines = 0;
-	std::string line;
-	std::ifstream myfile("registration patient name.txt");
-	while (std::getline(myfile, line))
+	string line;
+	ifstream myfile("registration patient name.txt");
+	while (getline(myfile, line))
 		++number_of_lines;
 	int count = 0;
 	ifstream edit1;
@@ -116,9 +114,9 @@ bool LogInPatient()
 	}
 	edit1.close();
 	int number_of_lines2 = 0;
-	std::string line2;
-	std::ifstream myfile2("registration patient pass.txt");
-	while (std::getline(myfile2, line2))
+	string line2;
+	ifstream myfile2("registration patient pass.txt");
+	while (getline(myfile2, line2))
 		++number_of_lines2;
 	int count2 = 0;
 	ifstream edit2;
@@ -198,8 +196,6 @@ start:
 			flag = 1;
 		}
 	}
-
-
 	if (flag == 1)
 	{
 		cout << "Enter New Username : ";
@@ -221,7 +217,7 @@ start:
 			string tp1;
 			while (getline(edit1, tp1))
 			{
-				std::ofstream edit1;
+				ofstream edit1;
 				edit1.open("registration doctor name.txt", std::ofstream::out | std::ofstream::trunc);
 				edit1.close();
 			}
@@ -293,9 +289,9 @@ start:
 	cout << "Enter Current Password : ";
 	cin >> pas;
 	int number_of_lines1 = 0;
-	std::string line1;
-	std::ifstream myfile1("registration patient name.txt");
-	while (std::getline(myfile1, line1))
+	string line1;
+	ifstream myfile1("registration patient name.txt");
+	while (getline(myfile1, line1))
 	{
 		++number_of_lines1;
 	}
@@ -324,9 +320,9 @@ start:
 	}
 	edit2.close();
 	int number_of_lines3 = 0;
-	std::string line3;
-	std::ifstream myfile3("registration patient pass.txt");
-	while (std::getline(myfile3, line3))
+	string line3;
+	ifstream myfile3("registration patient pass.txt");
+	while (getline(myfile3, line3))
 	{
 		++number_of_lines3;
 	}
@@ -367,7 +363,7 @@ start:
 			string tp1;
 			while (getline(edit1, tp1))
 			{
-				std::ofstream edit1;
+				ofstream edit1;
 				edit1.open("registration patient name.txt", std::ofstream::out | std::ofstream::trunc);
 				edit1.close();
 			}
@@ -606,7 +602,7 @@ void Edit_Available_Time_Doctor()
 	cin >> time1.edit1;
 	cout << "Time : ";
 	cin >> time1.edit2;
-		int flag3 = 0;
+	int flag3 = 0;
 	for (int i = 0; i < number_of_lines3; i++)
 	{
 		if (timeselected[i] == time1.edit1 && timeselected[i + 1] == time1.edit2)
@@ -685,9 +681,9 @@ void Edit_Available_Time_Doctor()
 bool Find_Doctors()
 {
 	int number_of_lines = 0;
-	std::string line;
-	std::ifstream myfile("registration doctor name.txt");
-	while (std::getline(myfile, line))
+	string line;
+	ifstream myfile("registration doctor name.txt");
+	while (getline(myfile, line))
 	{
 		++number_of_lines;
 	}
@@ -717,7 +713,6 @@ bool Find_Doctors()
 	else
 		return false;
 }
-string booked[100];
 void book()
 {
 
@@ -849,7 +844,19 @@ void book()
 				file.open("time selected.txt", std::ios::app);
 				file << docname << endl << usernamepatient << endl << day2 << endl << time2 << endl;
 				file.close();
-				cout << "Booking Done\n";
+				cout << "Booking Done\n\n";
+				ofstream file1;
+				file1.open("doctor selected.txt", std::ios::app);
+				file1 << docname << endl;
+				file1.close();
+				ofstream file2;
+				file2.open("time selected1.txt", std::ios::app);
+				file2 << time2 << endl;
+				file2.close();
+				ofstream file3;
+				file3.open("day selected.txt", std::ios::app);
+				file3 << day2 << endl;
+				file3.close();
 
 			}
 			else {
@@ -910,6 +917,214 @@ void View_Appointment_Patient() {
 			cout << "Day : " << name[i + 1] << endl;
 			cout << "Time : " << name[i + 2] << endl;
 		}
+	}
+
+}
+void Edit_Appointment_Patient() {
+	int number_of_lines1 = 0;
+	string line1;
+	ifstream myfile1("time selected1.txt");
+	while (getline(myfile1, line1))
+		++number_of_lines1;
+	string time[100];
+	int count = 0;
+	ifstream edit1;
+	edit1.open("time selected1.txt");
+	while (count<number_of_lines1 && edit1 >> time[count])
+	{
+		count++;
+	}
+	edit1.close();
+	int number_of_lines2 = 0;
+	std::string line2;
+	std::ifstream myfile2("day selected.txt");
+	while (getline(myfile2, line2))
+		++number_of_lines2;
+	string day[100];
+	int count2 = 0;
+	ifstream edit2;
+	edit2.open("day selected.txt");
+	while (count2<number_of_lines2 && edit2 >> day[count2])
+	{
+		count2++;
+	}
+	edit2.close();
+	int number_of_lines3 = 0;
+	string doctor[100];
+	string line3;
+	ifstream myfile3("doctor selected.txt");
+	while (getline(myfile3, line3))
+		++number_of_lines3;
+	int count3 = 0;
+	ifstream edit3;
+	edit3.open("doctor selected.txt");
+	while (count3<number_of_lines3 && edit3 >> doctor[count3])
+	{
+		count3++;
+	}
+	edit3.close();
+	int number_of_lines4 = 0;
+	string doctorall[100];
+	string line4;
+	ifstream myfile4("registration doctor name.txt");
+	while (getline(myfile4, line4))
+		++number_of_lines4;
+	int count4 = 0;
+	ifstream edit4;
+	edit4.open("registration doctor name.txt");
+	while (count4<number_of_lines4 && edit4 >> doctorall[count4])
+	{
+		count4++;
+	}
+	edit4.close();
+	int number_of_lines5 = 0;
+	string timeall[100];
+	string line5;
+	ifstream myfile5("time.txt");
+	while (getline(myfile5, line5))
+		++number_of_lines5;
+	int count5 = 0;
+	ifstream edit5;
+	edit5.open("time.txt");
+	while (count5<number_of_lines5 && edit5 >> timeall[count5])
+	{
+		count5++;
+	}
+	edit5.close();
+	int number_of_lines6 = 0;
+	string dayall[100];
+	string line6;
+	ifstream myfile6("day.txt");
+	while (getline(myfile6, line6))
+		++number_of_lines6;
+	int count6 = 0;
+	ifstream edit6;
+	edit6.open("day.txt");
+	while (count6<number_of_lines6 && edit6 >> dayall[count6])
+	{
+		count6++;
+	}
+	edit6.close();
+	int k = 0, flag1 = 0, D = 0, T = 0, D2 = 0;
+	string timeEdit, dayEdit, doctorEdit, newTime, newDay, newDoctor;
+	cout << "Please Enter The Appoiment You Want To Modify" << endl;
+	cout << "Doctor : "; cin >> doctorEdit;
+	cout << "Day : ";   cin >> dayEdit;
+	cout << "Time : ";  cin >> timeEdit;
+	for (int i = 0; i < number_of_lines2; i++)
+	{
+		if (time[i] == timeEdit && day[i] == dayEdit && doctor[i] == doctorEdit)
+		{
+			k = i;
+			flag1 = 1;
+		}
+	}
+	if (flag1 == 1)
+	{
+
+		cout << "Enter The New Appoiment \n";
+		cout << "Doctor: "; cin >> newDoctor;
+		cout << "Day : ";   cin >> newDay;
+		cout << "Time : ";  cin >> newTime;
+		for (int j = 0; j < number_of_lines4; j++) {
+			if (newDoctor == doctorall[j])
+				D = 1;
+		}
+		for (int j = 0; j < number_of_lines5; j++) {
+			if (newTime == timeall[j])
+				T = 1;
+		}
+		for (int j = 0; j < number_of_lines6; j++) {
+			if (newDay == dayall[j])
+				D2 = 1;
+		}
+		if (D == 1 && T == 1 && D2 == 1) {
+			cout << "Edit Successfull" << endl;
+			day[k] = newDay;
+			time[k] = newTime;
+			doctor[k] = newDoctor;
+			edit3.open("doctor selected.txt", ios::in);
+			if (edit3.is_open())
+			{
+				string tp;
+				while (getline(edit3, tp))
+				{
+					std::ofstream edit1;
+					edit3.open("doctor seleceted.txt", std::ofstream::out | std::ofstream::trunc);
+					edit3.close();
+				}
+			}
+			for (int i = 0; i < number_of_lines3; i++)
+			{
+				ofstream edit1;
+				edit1.open("doctor selected.txt", std::ios::app);
+				edit1 << doctor[i] << endl;
+				edit1.close();
+			}
+			edit2.open("day selected.txt", ios::in);
+			if (edit2.is_open())
+			{
+				string tp2;
+				while (getline(edit2, tp2))
+				{
+					std::ofstream edit2;
+					edit2.open("day selected.txt", std::ofstream::out | std::ofstream::trunc);
+					edit2.close();
+				}
+			}
+			for (int i = 0; i < number_of_lines2; i++)
+			{
+				ofstream edit2;
+				edit2.open("day selected.txt", std::ios::app);
+				edit2 << day[i] << endl;
+				edit2.close();
+			}
+			edit1.open("time selected1.txt", ios::in);
+			if (edit1.is_open())
+			{
+				string tp3;
+				while (getline(edit1, tp3))
+				{
+					std::ofstream edit1;
+					edit1.open("time selected1.txt", std::ofstream::out | std::ofstream::trunc);
+					edit1.close();
+				}
+			}
+			for (int i = 0; i < number_of_lines1; i++)
+			{
+				ofstream edit1;
+				edit1.open("time selected1.txt", std::ios::app);
+				edit1 << time[i] << endl;
+				edit1.close();
+			}
+			ifstream edit6("time selected.txt", ios::in);
+			if (edit6.is_open())
+			{
+				string tp6;
+				while (getline(edit6, tp6))
+				{
+					std::ofstream edit6;
+					edit6.open("time selected.txt", std::ofstream::out | std::ofstream::trunc);
+					edit6.close();
+				}
+			}
+			for (int i = 0; i < number_of_lines1; i++)
+			{
+				ofstream edit6;
+				edit6.open("time selected.txt", std::ios::app);
+				edit6 << doctor[i] << endl << usernamepatient << endl << day[i] << endl << time[i];
+				edit6.close();
+			}
+		}
+		else {
+			cout << "something is wrong" << endl;
+		}
+
+	}
+	else
+	{
+		cout << "\nThis Appoiment Doesn't Found !";
+		cout << endl;
 	}
 
 }
@@ -1059,6 +1274,9 @@ start:
 					break;
 				case 3:
 					View_Appointment_Patient();
+					break;
+				case 4:
+					Edit_Appointment_Patient();
 					break;
 				case 7:
 					Edit_Info_Patient();
