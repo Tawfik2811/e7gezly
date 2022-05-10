@@ -518,7 +518,7 @@ void Delete_Appoiments_Doctor()
 			flag4 = 1;
 		}
 	}
-	if (flag4 = 1)
+	if (flag4 == 1)
 	{
 		cout << "You Cannot Change This Appointment Because It Is Already Booked\n\n";
 	}
